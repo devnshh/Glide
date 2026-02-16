@@ -1,0 +1,69 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useApp } from '@/lib/app-context';
+import { GlassCard } from '../core/glass-card';
+import { Zap, Gauge } from 'lucide-react';
+import { Slider } from '@/components/ui/slider';
+
+export function SpeedControl() {
+    const { state, updateSystemStatus } = useApp();
+
+    const [speed, setSpeed] = useState(1.0);
+
+    useEffect(() => {
+        if (state.systemStatus.speedFactor !== undefined) {
+            setSpeed(state.systemStatus.speedFactor);
+        }
+    }, [state.systemStatus.speedFactor]);
+
+    const handleSpeedChange = (value: number[]) => {
+        const newSpeed = value[0];
+        setSpeed(newSpeed);
+    };
+
+    const handleSpeedCommit = (value: number[]) => {
+        const newSpeed = value[0];
+        updateSystemStatus({ speedFactor: newSpeed });
+    };
+
+    const getSpeedLabel = (val: number) => {
+        if (val < 0.5) return 'Slow';
+        if (val < 1.2) return 'Normal';
+        if (val < 2.0) return 'Fast';
+        return 'Turbo';
+    };
+
+    return (
+        <GlassCard className="p-4 flex items-center gap-4">
+            <div className="p-2 rounded-full bg-yellow-500/20 text-yellow-500">
+                <Gauge className="w-5 h-5" />
+            </div>
+
+            <div className="flex-1 space-y-2">
+                <div className="flex justify-between items-center">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                        Detection Speed
+                    </label>
+                    <span className="text-xs font-mono text-yellow-500 bg-yellow-500/10 px-2 py-0.5 rounded">
+                        {speed.toFixed(1)}x ({getSpeedLabel(speed)})
+                    </span>
+                </div>
+
+                <Slider
+                    defaultValue={[1.0]}
+                    value={[speed]}
+                    min={0.1}
+                    max={3.0}
+                    step={0.1}
+                    onValueChange={handleSpeedChange}
+                    onValueCommit={handleSpeedCommit}
+                    className="py-2"
+                />
+                <p className="text-xs text-muted-foreground">
+                    Higher speed reduces cooldowns but may cause double-triggers.
+                </p>
+            </div>
+        </GlassCard>
+    );
+}

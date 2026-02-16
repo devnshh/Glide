@@ -1,0 +1,153 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { Play, Square, Camera, CameraOff } from 'lucide-react';
+import { useApp } from '@/lib/app-context';
+import { GlassCard } from '../core/glass-card';
+import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
+import { useState, useEffect } from 'react';
+
+export function LiveFeedControls() {
+  const { state, dispatch } = useApp();
+
+  const [localThreshold, setLocalThreshold] = useState([75]);
+
+  useEffect(() => {
+    if (state.systemStatus.confidenceThreshold !== undefined) {
+      setLocalThreshold([state.systemStatus.confidenceThreshold]);
+    }
+  }, [state.systemStatus.confidenceThreshold]);
+
+  const handleThresholdChange = async (value: number[]) => {
+    setLocalThreshold(value);
+    try {
+      await fetch('http://localhost:8053/system/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ confidenceThreshold: value[0] })
+      });
+    } catch (e) {
+      console.error("Failed to update threshold", e);
+    }
+  };
+
+  const toggleDetection = async () => {
+    const newStatus = !state.systemStatus.detectionActive;
+    try {
+      await fetch('http://localhost:8053/system/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ detectionActive: newStatus })
+      });
+      dispatch({
+        type: 'UPDATE_SYSTEM_STATUS',
+        payload: { detectionActive: newStatus },
+      });
+    } catch (e) {
+      console.error("Failed to toggle detection", e);
+    }
+  };
+
+  const toggleCamera = async () => {
+    const newStatus = state.systemStatus.camera === 'on' ? 'off' : 'on';
+    try {
+      await fetch('http://localhost:8053/system/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ camera: newStatus })
+      });
+      dispatch({
+        type: 'UPDATE_SYSTEM_STATUS',
+        payload: { camera: newStatus },
+      });
+    } catch (e) {
+      console.error("Failed to toggle camera", e);
+    }
+  };
+
+  return (
+    <GlassCard className="p-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+      {}
+      <motion.div className="flex-1">
+        <Button
+          onClick={toggleDetection}
+          className={`w-full h-12 justify-between transition-smooth ${state.systemStatus.detectionActive
+            ? 'bg-emerald-600 hover:bg-emerald-700'
+            : 'bg-slate-700 hover:bg-slate-600'
+            }`}
+        >
+          <span className="flex items-center gap-2">
+            {state.systemStatus.detectionActive ? (
+              <>
+                <Square className="w-4 h-4" />
+                Stop Detection
+              </>
+            ) : (
+              <>
+                <Play className="w-4 h-4" />
+                Start Detection
+              </>
+            )}
+          </span>
+          {state.systemStatus.detectionActive && (
+            <motion.div
+              className="w-2 h-2 rounded-full bg-white"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          )}
+        </Button>
+      </motion.div>
+
+      {}
+      <motion.div className="flex-1">
+        <Button
+          onClick={toggleCamera}
+          className={`w-full h-12 justify-center transition-smooth ${state.systemStatus.camera === 'on'
+            ? 'bg-indigo-600 hover:bg-indigo-700'
+            : 'bg-red-600 hover:bg-red-700'
+            }`}
+        >
+          <span className="flex items-center gap-2">
+            {state.systemStatus.camera === 'on' ? (
+              <>
+                <Camera className="w-4 h-4" />
+                Camera On
+              </>
+            ) : (
+              <>
+                <CameraOff className="w-4 h-4" />
+                Camera Off
+              </>
+            )}
+          </span>
+        </Button>
+      </motion.div>
+
+      {}
+      <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="flex items-center gap-3 w-40 min-w-[200px]">
+          <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[3.5rem]">
+            Conf: {localThreshold}%
+          </span>
+          <Slider
+            defaultValue={[75]}
+            max={100}
+            min={10}
+            step={5}
+            value={localThreshold}
+            onValueChange={handleThresholdChange}
+            className="w-full flex-1"
+          />
+        </div>
+        <div className="glass-sm px-4 py-2 rounded-lg flex items-center gap-2 whitespace-nowrap self-end sm:self-auto">
+          <span className="text-xs text-muted-foreground">FPS:</span>
+          <span className="font-mono text-sm font-semibold text-cyan-400">
+            {state.systemStatus.fps}
+          </span>
+        </div>
+      </div>
+    </GlassCard>
+  );
+}

@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', monospace;
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-glass border border-white/10;
+  }
+
+  .glass-lg {
+    @apply bg-white/5 backdrop-blur-glass border border-white/10 rounded-2xl;
+  }
+
+  .glass-sm {
+    @apply bg-white/5 backdrop-blur-glass border border-white/10 rounded-lg;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-glass border border-white/10 rounded-xl;
+  }
+
+  .glow-indigo {
+    @apply shadow-lg shadow-indigo-500/20;
+  }
+
+  .glow-cyan {
+    @apply shadow-lg shadow-cyan-500/20;
+  }
+
+  .glow-indigo-lg {
+    @apply shadow-2xl shadow-indigo-500/30;
+  }
+
+  .glow-cyan-lg {
+    @apply shadow-2xl shadow-cyan-500/30;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/80;
+  }
+
+  .transition-smooth {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .status-active {
+    @apply text-emerald-400;
+  }
+
+  .status-error {
+    @apply text-red-400;
+  }
+
+  .status-warning {
+    @apply text-amber-400;
+  }
+
+  .status-idle {
+    @apply text-gray-400;
+  }
+}
+
+@layer base {
+  :root {
+
+    --background: 240 10% 5%;
+    --foreground: 240 10% 95%;
+    --card: 240 10% 8%;
+    --card-foreground: 240 10% 95%;
+    --popover: 240 10% 8%;
+    --popover-foreground: 240 10% 95%;
+    --primary: 239 84% 67%;
+    --primary-foreground: 240 10% 8%;
+    --secondary: 186 92% 50%;
+    --secondary-foreground: 240 10% 8%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 239 84% 67%;
+    --accent-foreground: 240 10% 8%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 240 10% 95%;
+    --border: 240 10% 15%;
+    --input: 240 10% 12%;
+    --ring: 239 84% 67%;
+    --chart-1: 239 84% 67%;
+    --chart-2: 186 92% 50%;
+    --chart-3: 260 70% 60%;
+    --chart-4: 340 75% 55%;
+    --chart-5: 30 80% 55%;
+    --radius: 0.75rem;
+    --sidebar-background: 240 10% 8%;
+    --sidebar-foreground: 240 10% 95%;
+    --sidebar-primary: 239 84% 67%;
+    --sidebar-primary-foreground: 240 10% 8%;
+    --sidebar-accent: 186 92% 50%;
+    --sidebar-accent-foreground: 240 10% 8%;
+    --sidebar-border: 240 10% 15%;
+    --sidebar-ring: 239 84% 67%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
