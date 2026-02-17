@@ -1,6 +1,8 @@
 <div align="center">
   <h1>Glide</h1>
 
+  <img src="path/to/logo.png" alt="Glide Logo" width="150" height="auto" />
+  
   <p>
     <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
     <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
@@ -63,6 +65,7 @@ Glide/
 │   ├── action_mapper.py        # Mapping interface for system actions
 │   ├── websocket_manager.py     # Connection management for real-time updates
 │   ├── gestures.json           # Persistent storage for mappings
+│   ├── Dockerfile              # Docker configuration for engine
 │   └── requirements.txt        # Python dependency specifications
 ├── app/                        # Next.js App Router and page layouts
 ├── components/                 # Reusable UI components (LiveFeed, UI, Dashboard)
@@ -71,23 +74,49 @@ Glide/
 ├── public/                     # Static assets and icons
 ├── styles/                     # Tailwind CSS and global themes
 ├── package.json               # Node.js dependency specifications
+├── Dockerfile.web             # Docker configuration for frontend
+├── docker-compose.yml         # Container orchestration
+├── install.sh                 # Unified installation script
 ├── .gitignore                  # Consolidated repository ignore rules
 └── readme.md                  # Project documentation
 ```
 
 ## 🛠️ Setup and Installation
 
-### 📋 Prerequisites
-- Python 3.9 or higher
+You can run Glide using **Docker** (Recommended) or a **Local Installation**.
+
+### Option 1: 🐳 Docker (Recommended)
+Run the entire stack in isolated containers. This ensures compatibility with any Python version.
+
+```bash
+# Start backend and frontend
+docker-compose up --build
+```
+- **Dashboard**: http://localhost:3000
+- **Engine API**: http://localhost:8053
+
+### Option 2: ⚡ Quick Install Script
+Use the provided script to set up everything automatically on your local machine (Brew must be installed)
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+### Option 3: 🔧 Manual Installation
+
+#### 📋 Prerequisites
+- Python 3.9 - 3.11 (Python 3.13 not supported by MediaPipe yet)
 - Node.js 18 or higher (pnpm recommended)
 - Integrated or external webcam
 
-### 1. ⚙️ Engine Configuration (Backend)
+#### 1. ⚙️ Engine Configuration (Backend)
 Navigate to the engine directory and initialize the environment:
 
 ```bash
 cd engine
-python3 -m venv venv
+# Use Python 3.11 if available for best compatibility
+python3.11 -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
@@ -98,7 +127,7 @@ python3 main.py
 ```
 Default endpoint: http://localhost:8053
 
-### 2. 🖥️ Dashboard Configuration (Frontend)
+#### 2. 🖥️ Dashboard Configuration (Frontend)
 From the root directory, install dependencies and start the UI:
 
 ```bash
