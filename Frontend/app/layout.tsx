@@ -4,6 +4,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { AppProvider } from '@/lib/app-context'
 import { WebSocketProvider } from '@/lib/websocket-context'
+import Silk from '@/components/ui/silk'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -38,7 +39,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-transparent text-foreground min-h-screen`}>
+        {/* Silk Background */}
+        <div className="fixed inset-0 -z-10 h-full w-full">
+          <Silk
+            speed={2.8}
+            scale={0.6}
+            color="#301088ff" // RGB(87,35,231)
+            noiseIntensity={2.5}
+            rotation={0}
+          />
+        </div>
+
         <AppProvider>
           <WebSocketProvider>
             {children}

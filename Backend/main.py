@@ -534,6 +534,10 @@ def update_system_status(status_update: dict):
                 if not any(t.name == "CameraThread" for t in threading.enumerate()):
                      camera_thread = threading.Thread(target=camera_loop, name="CameraThread", daemon=True)
                      camera_thread.start()
+
+                if not any(t.name == "DetectionThread" for t in threading.enumerate()):
+                     detection_thread = threading.Thread(target=detection_loop, name="DetectionThread", daemon=True)
+                     detection_thread.start()
         elif status_update["camera"] == "off":
             state.camera_running = False
 
