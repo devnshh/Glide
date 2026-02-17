@@ -64,7 +64,7 @@ export default function GesturesPage() {
         animate="visible"
       >
         { }
-        <motion.div variants={itemVariants} className="mb-8">
+        <motion.div variants={itemVariants} className="mb-8 -ml-[3px]">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
             Gestures
           </h1>

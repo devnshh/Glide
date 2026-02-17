@@ -37,7 +37,7 @@ export default function LiveFeedPage() {
         animate="visible"
       >
         { }
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="-ml-[3px]">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
             Live Feed
           </h1>
