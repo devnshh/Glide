@@ -464,7 +464,7 @@ export const MagicBentoGrid: React.FC<MagicBentoGridProps> = ({
             --glow-radius: 200px;
             --glow-color: ${glowColor};
             --border-color: #392e4e;
-            --background-dark: #060010;
+            --background-dark: #130b2e;
             --white: hsl(0, 0%, 100%);
             --purple-primary: rgba(87, 35, 231, 1);
             --purple-glow: rgba(87, 35, 231, 0.2);
@@ -541,7 +541,7 @@ export const MagicBentoCard: React.FC<MagicBentoCardProps> = (props) => {
     // Base classes from reference
     // Changed to border-transparent to ensure no "white border" artifact appears
     // The glow comes from card--border-glow::after which overlays the border area
-    const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-transparent font-light overflow-hidden transition-all duration-200 ease-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#060010]";
+    const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-transparent font-light overflow-hidden transition-all duration-200 ease-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#130b2e]";
 
     const defaultStyle = {
         borderColor: 'var(--border-color)',
