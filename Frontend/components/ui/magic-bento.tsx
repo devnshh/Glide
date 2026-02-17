@@ -531,14 +531,17 @@ import { motion } from 'framer-motion';
 
 // ... (keep previous code until MagicBentoCard definition)
 
-export const MagicBentoCard: React.FC<ParticleCardProps> = (props) => {
-    const { className, style, ...rest } = props;
+interface MagicBentoCardProps extends ParticleCardProps {
+    enableHoverAction?: boolean;
+}
+
+export const MagicBentoCard: React.FC<MagicBentoCardProps> = (props) => {
+    const { className, style, enableHoverAction = true, ...rest } = props;
 
     // Base classes from reference
-    // Removed hover:-translate-y-0.5 and hover:shadow (motion handles lift, shadow handled by motion or separate)
-    // Changed duration to 200 ease-out (transition-smooth)
-    // Added cursor-pointer as user requested "exact" match to AddGestureCard
-    const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-[rgba(255,255,255,0.1)] font-light overflow-hidden transition-all duration-200 ease-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#060010] cursor-pointer";
+    // Changed to border-transparent to ensure no "white border" artifact appears
+    // The glow comes from card--border-glow::after which overlays the border area
+    const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-transparent font-light overflow-hidden transition-all duration-200 ease-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#060010]";
 
     const defaultStyle = {
         borderColor: 'var(--border-color)',
@@ -551,8 +554,8 @@ export const MagicBentoCard: React.FC<ParticleCardProps> = (props) => {
     return (
         <motion.div
             className="h-full w-full"
-            whileHover={{ y: -4 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={enableHoverAction ? { y: -4 } : undefined}
+            whileTap={enableHoverAction ? { scale: 0.98 } : undefined}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
             <ParticleCard

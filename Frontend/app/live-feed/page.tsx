@@ -5,7 +5,7 @@ import { CameraFeed } from '@/components/live-feed/camera-feed';
 import { DetectionPanel } from '@/components/live-feed/detection-panel';
 import { LiveFeedControls } from '@/components/live-feed/controls';
 import { motion } from 'framer-motion';
-import { MagicBentoCard } from '@/components/ui/magic-bento';
+import { MagicBentoCard, MagicBentoGrid } from '@/components/ui/magic-bento';
 
 export default function LiveFeedPage() {
   const containerVariants = {
@@ -47,33 +47,35 @@ export default function LiveFeedPage() {
         </motion.div>
 
         { }
-        <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-[500px] items-start"
-        >
-          {/* Camera Feed Section */}
-          <div className="lg:col-span-2 h-full">
-            <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false}>
-              <div className="relative h-full w-full">
-                <CameraFeed className="h-full w-full" />
-              </div>
-            </MagicBentoCard>
-          </div>
+        <MagicBentoGrid>
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-[600px] items-stretch"
+          >
+            {/* Camera Feed Section */}
+            <div className="lg:col-span-2 h-full">
+              <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
+                <div className="relative h-full w-full">
+                  <CameraFeed className="h-full w-full" />
+                </div>
+              </MagicBentoCard>
+            </div>
 
-          {/* Detection Panel Section */}
-          <div className="h-full">
-            <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false}>
-              <DetectionPanel />
-            </MagicBentoCard>
-          </div>
-        </motion.div>
+            {/* Detection Panel Section */}
+            <div className="h-full">
+              <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
+                <DetectionPanel />
+              </MagicBentoCard>
+            </div>
+          </motion.div>
 
-        { }
-        <motion.div variants={itemVariants}>
-          <MagicBentoCard className="p-0 overflow-hidden" enableTilt={false} enableMagnetism={false}>
-            <LiveFeedControls />
-          </MagicBentoCard>
-        </motion.div>
+          { }
+          <motion.div variants={itemVariants} className="mt-6">
+            <MagicBentoCard className="p-0 overflow-hidden" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
+              <LiveFeedControls />
+            </MagicBentoCard>
+          </motion.div>
+        </MagicBentoGrid>
       </motion.div>
     </AppShell>
   );

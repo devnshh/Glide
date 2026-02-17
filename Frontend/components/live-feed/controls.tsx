@@ -36,8 +36,12 @@ export function LiveFeedControls() {
 
   return (
     <GlassCard className="p-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-      { }
-      <motion.div className="flex-1">
+      {/* Detection Toggle */}
+      <motion.div
+        className="flex-1"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <Button
           onClick={toggleDetection}
           className={`w-full h-12 justify-between transition-all duration-300 text-white bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10`}
@@ -65,8 +69,12 @@ export function LiveFeedControls() {
         </Button>
       </motion.div>
 
-      { }
-      <motion.div className="flex-1">
+      {/* Camera Toggle */}
+      <motion.div
+        className="flex-1"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <Button
           onClick={toggleCamera}
           className={`w-full h-12 justify-center transition-all duration-300 text-white bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10`}
@@ -90,7 +98,7 @@ export function LiveFeedControls() {
       { }
       <div className="flex flex-col sm:flex-row items-center gap-4">
         <div className="flex items-center gap-3 w-40 min-w-[200px]">
-          <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[3.5rem]">
+          <span className="text-xs text-white whitespace-nowrap min-w-[3.5rem]">
             Conf: {localThreshold}%
           </span>
           <Slider
@@ -104,8 +112,8 @@ export function LiveFeedControls() {
           />
         </div>
         <div className="glass-sm px-4 py-2 rounded-lg flex items-center gap-2 whitespace-nowrap self-end sm:self-auto">
-          <span className="text-xs text-muted-foreground">FPS:</span>
-          <span className="font-mono text-sm font-semibold text-cyan-400">
+          <span className="text-xs text-white">FPS:</span>
+          <span className="font-mono text-sm font-semibold text-white">
             {state.systemStatus.fps}
           </span>
         </div>
