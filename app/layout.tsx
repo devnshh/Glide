@@ -21,7 +21,12 @@ export const metadata: Metadata = {
   description: 'Premium gesture-based desktop control with real-time WebSocket updates',
   generator: 'v0.app',
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '32x32' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
 }
 

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Activity, Zap, Video, BarChart3 } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -23,9 +24,9 @@ export function Navigation() {
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-cyan-400 rounded-lg flex items-center justify-center"
+            className="w-8 h-8 rounded-lg overflow-hidden"
           >
-            <Zap className="w-5 h-5 text-white" />
+            <Image src="/logo.jpeg" alt="Glide Logo" width={32} height={32} className="w-full h-full object-cover" />
           </motion.div>
           <span className="font-bold text-lg text-white hidden sm:inline">
             Glide

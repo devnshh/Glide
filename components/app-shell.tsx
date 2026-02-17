@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Activity, Wand2, Video } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
@@ -29,11 +30,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           { }
           <div className="flex items-center gap-3">
             <motion.div
-              className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-foreground font-bold text-sm"
+              className="w-8 h-8 rounded-lg overflow-hidden"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              GD
+              <Image src="/logo.jpeg" alt="Glide Logo" width={32} height={32} className="w-full h-full object-cover" />
             </motion.div>
             <div>
               <h1 className="text-base font-semibold">Glide</h1>

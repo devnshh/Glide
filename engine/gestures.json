@@ -1,12 +1,5 @@
 [
   {
-    "id": "er5pws6",
-    "name": "Palm",
-    "emoji": "\ud83d\udc4b",
-    "action": "volume_up",
-    "sampleCount": 50
-  },
-  {
     "id": "ih9uq87",
     "name": "Fist",
     "emoji": "\ud83d\udc4b",
@@ -33,5 +26,12 @@
     "emoji": "\ud83d\udc4b",
     "action": "toggle_cursor",
     "sampleCount": 30
+  },
+  {
+    "id": "palm",
+    "name": "Palm",
+    "emoji": "\ud83d\udc4b",
+    "action": "volume_up",
+    "sampleCount": 50
   }
 ]

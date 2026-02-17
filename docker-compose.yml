@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  engine:
+    build:
+      context: ./engine
+    command: python main.py
+    volumes:
+      - ./engine:/app
+    ports:
+      - "8053:8053"
+    tty: true
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - engine
