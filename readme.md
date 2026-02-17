@@ -39,28 +39,27 @@ Glide is a sophisticated, AI-powered desktop control system that allows users to
 
 ```text
 Glide/
-├── Backend/
+├── engine/                     # AI & System Control Logic
 │   ├── data/                   # Saved landmark samples (npy format)
 │   ├── models/                 # Serialized model weights and metadata
-│   ├── main.py                 # FastAPI server, WebSocket orchestrator, and system state
+│   ├── main.py                 # FastAPI server, WebSocket orchestrator
 │   ├── gesture_detector.py      # MediaPipe integration for landmark extraction
 │   ├── gesture_classifier.py    # Random Forest training and prediction logic
 │   ├── mouse_controller.py      # Cursor movement and click detection logic
 │   ├── desktop_controller.py    # Platform-specific automation (PyAutoGUI)
-│   ├── action_mapper.py        # Mapping interface between gestures and system actions
-│   ├── websocket_manager.py     # Connection management for real-time UI updates
-│   ├── gestures.json           # Persistent storage for user-defined gesture mappings
+│   ├── action_mapper.py        # Mapping interface for system actions
+│   ├── websocket_manager.py     # Connection management for real-time updates
+│   ├── gestures.json           # Persistent storage for mappings
 │   └── requirements.txt        # Python dependency specifications
-├── Frontend/
-│   ├── app/                    # Next.js App Router and page layouts
-│   ├── components/             # Reusable UI components (LiveFeed, Stats, Modals)
-│   ├── hooks/                  # Custom React hooks (useWebsocket, useGestures)
-│   ├── lib/                    # Utility functions and type definitions
-│   ├── public/                 # Static assets and icons
-│   ├── styles/                 # Tailwind CSS configuration and global themes
-│   └── package.json            # Node.js dependency specifications
+├── app/                        # Next.js App Router and page layouts
+├── components/                 # Reusable UI components (LiveFeed, UI, Dashboard)
+├── hooks/                      # Custom React hooks (useMobile, etc.)
+├── lib/                        # Utility functions and type definitions
+├── public/                     # Static assets and icons
+├── styles/                     # Tailwind CSS and global themes
+├── package.json               # Node.js dependency specifications
 ├── .gitignore                  # Consolidated repository ignore rules
-└── readme.md                   # Project documentation
+└── readme.md                  # Project documentation
 ```
 
 ## Setup and Installation
@@ -70,27 +69,26 @@ Glide/
 - Node.js 18 or higher (pnpm recommended)
 - Integrated or external webcam
 
-### 1. Backend Configuration
-Navigate to the Backend directory and initialize the environment:
+### 1. Engine Configuration (Backend)
+Navigate to the engine directory and initialize the environment:
 
 ```bash
-cd Backend
+cd engine
 python3 -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Launch the backend server:
+Launch the engine server:
 ```bash
 python3 main.py
 ```
 Default endpoint: http://localhost:8053
 
-### 2. Frontend Configuration
-Navigate to the Frontend directory and install dependencies:
+### 2. Dashboard Configuration (Frontend)
+From the root directory, install dependencies and start the UI:
 
 ```bash
-cd Frontend
 pnpm install
 # Alternative: npm install
 ```
