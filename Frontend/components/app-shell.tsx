@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Activity, Wand2, Video, Settings } from 'lucide-react';
+import { Activity, Wand2, Video } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
 import { useWebSocket } from '@/lib/websocket-context';
 import { StatusIndicator } from './core/status-indicator';
@@ -14,7 +14,6 @@ const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: Activity },
   { href: '/gestures', label: 'Gestures', icon: Wand2 },
   { href: '/live-feed', label: 'Live Feed', icon: Video },
-  { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {

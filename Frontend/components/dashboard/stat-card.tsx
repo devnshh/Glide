@@ -21,12 +21,12 @@ export function StatCard({
 }: StatCardProps) {
   return (
     <GlassCard
-      className="p-6 flex flex-col gap-4"
+      className="p-6 flex flex-col gap-4 h-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {}
+      { }
       <motion.div
         className="w-12 h-12 rounded-lg bg-gradient-to-br from-indigo-500/20 to-cyan-500/20 flex items-center justify-center text-indigo-400"
         whileHover={{ scale: 1.1 }}
@@ -34,11 +34,11 @@ export function StatCard({
         {icon}
       </motion.div>
 
-      {}
+      { }
       <div className="flex flex-col gap-2">
         <p className="text-sm text-muted-foreground font-medium">{label}</p>
 
-        {}
+        { }
         <div className="flex items-baseline gap-1">
           <motion.div
             className="text-3xl font-bold text-foreground"
@@ -53,12 +53,11 @@ export function StatCard({
           )}
         </div>
 
-        {}
+        { }
         {trend && (
           <div
-            className={`text-xs font-medium ${
-              trend.direction === 'up' ? 'text-emerald-400' : 'text-red-400'
-            }`}
+            className={`text-xs font-medium ${trend.direction === 'up' ? 'text-emerald-400' : 'text-red-400'
+              }`}
           >
             {trend.direction === 'up' ? '↑' : '↓'} {trend.value}% this week
           </div>

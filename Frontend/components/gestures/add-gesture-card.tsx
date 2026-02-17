@@ -16,6 +16,7 @@ export function AddGestureCard({ onClick, delay = 0 }: AddGestureCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
       whileHover={{ y: -4 }}
+      className="h-full"
     >
       <motion.button
         onClick={onClick}

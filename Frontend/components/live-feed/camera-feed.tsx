@@ -55,7 +55,7 @@ export function CameraFeed({ className }: CameraFeedProps) {
             <img
               src={feedUrl}
               alt="Live Camera Feed"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
               onLoad={handleImageLoad}
               onError={handleImageError}
             />
@@ -100,7 +100,7 @@ export function CameraFeed({ className }: CameraFeedProps) {
         )}
       </AnimatePresence>
 
-      {}
+      { }
       {isCameraOn && !error && !loading && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}

@@ -65,15 +65,28 @@ class DesktopController:
 
     def play_pause(self):
         print("DesktopController: Play/Pause")
-        pyautogui.press("playpause")
+        if platform.system() == "Darwin":
+            import os
+            # Toggle Play/Pause using AppleScript
+            os.system("osascript -e 'tell application \"System Events\" to key code 103'")
+        else:
+            pyautogui.press("playpause")
 
     def next_track(self):
         print("DesktopController: Next Track")
-        pyautogui.press("nexttrack")
+        if platform.system() == "Darwin":
+            import os
+            os.system("osascript -e 'tell application \"System Events\" to key code 101'")
+        else:
+            pyautogui.press("nexttrack")
 
     def prev_track(self):
         print("DesktopController: Prev Track")
-        pyautogui.press("prevtrack")
+        if platform.system() == "Darwin":
+            import os
+            os.system("osascript -e 'tell application \"System Events\" to key code 100'")
+        else:
+            pyautogui.press("prevtrack")
 
     def scroll_up(self):
         pyautogui.scroll(50)
