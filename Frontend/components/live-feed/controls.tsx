@@ -40,20 +40,17 @@ export function LiveFeedControls() {
       <motion.div className="flex-1">
         <Button
           onClick={toggleDetection}
-          className={`w-full h-12 justify-between transition-smooth ${state.systemStatus.detectionActive
-            ? 'bg-emerald-600 hover:bg-emerald-700'
-            : 'bg-slate-700 hover:bg-slate-600'
-            }`}
+          className={`w-full h-12 justify-between transition-all duration-300 text-white bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10`}
         >
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-2 text-white">
             {state.systemStatus.detectionActive ? (
               <>
-                <Square className="w-4 h-4" />
+                <Square className="w-4 h-4 text-white" />
                 Stop Detection
               </>
             ) : (
               <>
-                <Play className="w-4 h-4" />
+                <Play className="w-4 h-4 text-white" />
                 Start Detection
               </>
             )}
@@ -72,20 +69,17 @@ export function LiveFeedControls() {
       <motion.div className="flex-1">
         <Button
           onClick={toggleCamera}
-          className={`w-full h-12 justify-center transition-smooth ${state.systemStatus.camera === 'on'
-            ? 'bg-indigo-600 hover:bg-indigo-700'
-            : 'bg-red-600 hover:bg-red-700'
-            }`}
+          className={`w-full h-12 justify-center transition-all duration-300 text-white bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10`}
         >
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-2 text-white">
             {state.systemStatus.camera === 'on' ? (
               <>
-                <Camera className="w-4 h-4" />
+                <Camera className="w-4 h-4 text-white" />
                 Camera On
               </>
             ) : (
               <>
-                <CameraOff className="w-4 h-4" />
+                <CameraOff className="w-4 h-4 text-white" />
                 Camera Off
               </>
             )}

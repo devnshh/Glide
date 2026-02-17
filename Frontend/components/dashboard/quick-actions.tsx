@@ -96,20 +96,20 @@ export function QuickActions() {
         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
           <Button
             onClick={toggleDetection}
-            className={`w-full justify-between h-12 transition-smooth ${state.systemStatus.detectionActive
-              ? 'bg-emerald-600 hover:bg-emerald-700'
-              : 'bg-slate-700 hover:bg-slate-600'
+            className={`w-full justify-between h-12 transition-all duration-300 text-white ${state.systemStatus.detectionActive
+              ? 'bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10'
+              : 'bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-sm'
               }`}
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 text-white">
               {state.systemStatus.detectionActive ? (
                 <>
-                  <Square className="w-4 h-4" />
+                  <Square className="w-4 h-4 text-white" />
                   Stop Detection
                 </>
               ) : (
                 <>
-                  <Play className="w-4 h-4" />
+                  <Play className="w-4 h-4 text-white" />
                   Start Detection
                 </>
               )}
@@ -131,10 +131,10 @@ export function QuickActions() {
               dispatch({ type: 'OPEN_MODAL', payload: { type: 'retrain' } })
             }
             disabled={state.trainingState.inProgress}
-            className="w-full justify-between h-12 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+            className="w-full justify-between h-12 bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10 disabled:opacity-50 text-white"
           >
-            <span className="flex items-center gap-2">
-              <RotateCcw className="w-4 h-4" />
+            <span className="flex items-center gap-2 text-white">
+              <RotateCcw className="w-4 h-4 text-white" />
               {state.trainingState.inProgress
                 ? `Retraining... ${state.trainingState.progress}%`
                 : 'Retrain Model'}
@@ -151,10 +151,10 @@ export function QuickActions() {
                 payload: { type: 'addGesture' },
               })
             }
-            className="w-full justify-between h-12 bg-cyan-600 hover:bg-cyan-700"
+            className="w-full justify-between h-12 bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10 text-white"
           >
-            <span className="flex items-center gap-2">
-              <Plus className="w-4 h-4" />
+            <span className="flex items-center gap-2 text-white">
+              <Plus className="w-4 h-4 text-white" />
               Add Gesture
             </span>
           </Button>
@@ -164,13 +164,13 @@ export function QuickActions() {
         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
           <Button
             onClick={toggleCamera}
-            className={`w-full justify-between h-12 transition-smooth ${state.systemStatus.camera === 'on'
-              ? 'bg-slate-700 hover:bg-slate-600'
-              : 'bg-red-600 hover:bg-red-700'
+            className={`w-full justify-between h-12 transition-all duration-300 text-white ${state.systemStatus.camera === 'on'
+              ? 'bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10'
+              : 'bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-sm'
               }`}
           >
-            <span className="flex items-center gap-2">
-              <Camera className="w-4 h-4" />
+            <span className="flex items-center gap-2 text-white">
+              <Camera className="w-4 h-4 text-white" />
               {state.systemStatus.camera === 'on'
                 ? 'Camera On'
                 : 'Camera Off'}

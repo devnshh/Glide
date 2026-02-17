@@ -5,6 +5,7 @@ import { CameraFeed } from '@/components/live-feed/camera-feed';
 import { DetectionPanel } from '@/components/live-feed/detection-panel';
 import { LiveFeedControls } from '@/components/live-feed/controls';
 import { motion } from 'framer-motion';
+import { MagicBentoCard } from '@/components/ui/magic-bento';
 
 export default function LiveFeedPage() {
   const containerVariants = {
@@ -35,7 +36,7 @@ export default function LiveFeedPage() {
         initial="hidden"
         animate="visible"
       >
-        {}
+        { }
         <motion.div variants={itemVariants}>
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
             Live Feed
@@ -45,27 +46,33 @@ export default function LiveFeedPage() {
           </p>
         </motion.div>
 
-        {}
+        { }
         <motion.div
           variants={itemVariants}
           className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-[500px] items-start"
         >
-          {}
-          <div className="lg:col-span-2 flex flex-col h-full relative">
-            <div className="absolute inset-0">
-              <CameraFeed className="h-full w-full" />
-            </div>
+          {/* Camera Feed Section */}
+          <div className="lg:col-span-2 h-full">
+            <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false}>
+              <div className="relative h-full w-full">
+                <CameraFeed className="h-full w-full" />
+              </div>
+            </MagicBentoCard>
           </div>
 
-          {}
-          <div className="flex flex-col h-full">
-            <DetectionPanel />
+          {/* Detection Panel Section */}
+          <div className="h-full">
+            <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false}>
+              <DetectionPanel />
+            </MagicBentoCard>
           </div>
         </motion.div>
 
-        {}
+        { }
         <motion.div variants={itemVariants}>
-          <LiveFeedControls />
+          <MagicBentoCard className="p-0 overflow-hidden" enableTilt={false} enableMagnetism={false}>
+            <LiveFeedControls />
+          </MagicBentoCard>
         </motion.div>
       </motion.div>
     </AppShell>
