@@ -1,7 +1,19 @@
-# Glide - Gesture Control Desktop System
+<div align="center">
+  <h1>Glide</h1>
 
-Glide is a sophisticated, AI-powered desktop control system that allows users to control their computers using customizable hand gestures. It combines real-time computer vision (MediaPipe) with a modern, glassmorphism-styled React dashboard for a seamless and futuristic user experience.
+  <p>
+    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+    <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  </p>
 
+  <p>A sophisticated, AI-powered desktop control system powered by MediaPipe and React.</p>
+</div>
+
+Glide combines real-time computer vision with a modern, glassmorphism-styled dashboard for a seamless and futuristic user experience.
 ## Features
 
 ### Computer Vision and AI
