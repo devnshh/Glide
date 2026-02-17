@@ -291,29 +291,31 @@ def detection_loop():
                                   execute_gesture_action_logic(action_name)
                       
                       # --- Notifications ---
+                      # Only notify if confidence is ABOVE threshold
                       should_notify = False
-                      # Debounce notifications
-                      if current_time - state.last_notification_time > 0.5:
-                          if state.cursor_mode:
-                              # Only notify toggle in cursor mode
-                              if action_name == "toggle_cursor" and confidence_score > 0.8:
+                      if confidence_score > state.confidence_threshold:
+                          # Debounce notifications
+                          if current_time - state.last_notification_time > 0.5:
+                              if state.cursor_mode:
+                                  # Only notify toggle in cursor mode
+                                  if action_name == "toggle_cursor" and confidence_score > 0.8:
+                                      should_notify = True
+                              elif action_name:
+                                  # Notify all actions in normal mode
                                   should_notify = True
-                          elif action_name:
-                              # Notify all actions in normal mode
-                              should_notify = True
 
-                      if should_notify:
-                          state.last_notification_time = current_time
-                          message_queue.put({
-                              "type": "detection",
-                              "data": {
-                                  "gesture_id": "detect_" + str(uuid.uuid4())[:8],
-                                  "gesture_name": gesture_name,
-                                  "confidence": float(confidence_score),
-                                  "action": action_name or "None",
-                                  "executed": True 
-                              }
-                          })
+                          if should_notify:
+                              state.last_notification_time = current_time
+                              message_queue.put({
+                                  "type": "detection",
+                                  "data": {
+                                      "gesture_id": "detect_" + str(uuid.uuid4())[:8],
+                                      "gesture_name": gesture_name,
+                                      "confidence": float(confidence_score),
+                                      "action": action_name or "None",
+                                      "executed": True 
+                                  }
+                              })
 
         except Exception as e:
             print(f"Detection Error: {e}")
