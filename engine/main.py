@@ -61,6 +61,7 @@ class SystemState:
         self.gestures = self.load_gestures()
         self.last_known_landmarks = None
         self.latest_frame_raw = None
+        self.latest_landmarks = None  # Shared landmark data from camera loop for detection loop
         self.draw_lock = threading.Lock()
 
     def load_gestures(self):
@@ -100,8 +101,8 @@ import mediapipe as mp
 _draw_hands = mp.solutions.hands.Hands(
     static_image_mode=False,
     max_num_hands=1,
-    min_detection_confidence=0.5,
-    min_tracking_confidence=0.4
+    min_detection_confidence=0.7,
+    min_tracking_confidence=0.5
 )
 _draw_mp_draw = mp.solutions.drawing_utils
 _draw_mp_hands = mp.solutions.hands
@@ -111,6 +112,9 @@ def camera_loop():
     if not cap.isOpened():
         print("Error: Could not open webcam.")
         return
+
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+    cap.set(cv2.CAP_PROP_FPS, 30)
 
     state.camera_running = True
     print("Camera started.")
@@ -127,27 +131,33 @@ def camera_loop():
 
         frame = cv2.flip(frame, 1)
 
-        # Update Shared State for Detection Thread (raw frame)
-        # We process a COPY to avoid threading issues
-        state.latest_frame_raw = frame.copy()
-
-        # Real-time landmark drawing directly on current frame
-        # Uses a separate lightweight MediaPipe instance to avoid latency
-        # from the detection thread's async processing
+        # Run MediaPipe once — used for both drawing AND detection
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         rgb.flags.writeable = False
         draw_results = _draw_hands.process(rgb)
         rgb.flags.writeable = True
+
+        # Draw landmarks on the frame for streaming
         if draw_results.multi_hand_landmarks:
             for hand_lm in draw_results.multi_hand_landmarks:
                 _draw_mp_draw.draw_landmarks(
                     frame, hand_lm, _draw_mp_hands.HAND_CONNECTIONS
                 )
 
+            # Share extracted landmarks with detection thread (normalized x,y,z list)
+            first_hand = draw_results.multi_hand_landmarks[0]
+            landmarks = []
+            for lm in first_hand.landmark:
+                landmarks.extend([lm.x, lm.y, lm.z])
+            with state.draw_lock:
+                state.latest_landmarks = landmarks
+        else:
+            with state.draw_lock:
+                state.latest_landmarks = None
+
         # Stream the frame (with overlay drawn on it)
         try:
-             # Fast encoding, high quality (default)
-             encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 85]
+             encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 92]
              ret, buffer = cv2.imencode('.jpg', frame, encode_param)
              if ret:
                  state.latest_frame = buffer.tobytes()
@@ -184,32 +194,22 @@ def camera_loop():
 
 
 def detection_loop():
-    """Independent loop for AI processing and Action Execution"""
+    """Independent loop for AI processing and Action Execution.
+    Uses shared landmarks from camera_loop — no duplicate MediaPipe call."""
     print("Detection thread started.")
-    
+
     while state.camera_running:
-        # 1. Get the latest raw frame
-        if not hasattr(state, 'latest_frame_raw') or state.latest_frame_raw is None:
+        # 1. Get the latest landmarks from camera loop
+        with state.draw_lock:
+            hand_landmarks = list(state.latest_landmarks) if state.latest_landmarks else None
+
+        if hand_landmarks is None:
             time.sleep(0.01)
             continue
-            
-        # Process a COPY to ensure detailed processing doesn't race with overwrite
-        frame_to_process = state.latest_frame_raw.copy()
-        
-        try:
-            # 2. Run Detection
-            processed_frame, landmarks_list, results = detector.process_frame(frame_to_process)
-            
-            # 3. Update Shared "Last Known Landmarks" for Camera Thread to draw
-            with state.draw_lock:
-                 if results.multi_hand_landmarks:
-                      state.last_known_landmarks = results.multi_hand_landmarks[0]
-                 else:
-                      state.last_known_landmarks = None
 
-            # 4. Action Logic
-            if landmarks_list:
-                 hand_landmarks = landmarks_list[0]
+        try:
+            # 2. Action Logic (uses landmarks shared from camera_loop's single MediaPipe pass)
+            if hand_landmarks:
                  
                  # --- Training Mode ---
                  if state.training_mode and state.training_gesture_id:
@@ -301,8 +301,7 @@ def detection_loop():
 
                       # 2. Cursor Mode Active
                       elif state.cursor_mode:
-                          if landmarks_list:
-                              mouse_controller.update(landmarks_list[0])
+                          mouse_controller.update(hand_landmarks)
                           # We do NOT execute other gestures in cursor mode
                           
                       # 3. Standard Gesture Mode
