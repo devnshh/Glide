@@ -23,7 +23,6 @@ export function GestureCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
-      whileHover={{ y: -4 }}
       className="h-full"
     >
       <MagicBentoCard className="p-6 h-full flex flex-col gap-4 group">

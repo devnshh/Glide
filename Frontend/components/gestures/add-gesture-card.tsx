@@ -15,13 +15,11 @@ export function AddGestureCard({ onClick, delay = 0 }: AddGestureCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
-      whileHover={{ y: -4 }}
       className="h-full"
     >
-      <motion.button
+      <button
         onClick={onClick}
         className="w-full h-full"
-        whileTap={{ scale: 0.98 }}
       >
         <MagicBentoCard className="p-6 h-full flex flex-col items-center justify-center gap-4 border-2 border-dashed border-white/20 hover:border-cyan-500/50 transition-smooth cursor-pointer">
           <motion.div
@@ -37,7 +35,7 @@ export function AddGestureCard({ onClick, delay = 0 }: AddGestureCardProps) {
             </p>
           </div>
         </MagicBentoCard>
-      </motion.button>
+      </button>
     </motion.div>
   );
 }

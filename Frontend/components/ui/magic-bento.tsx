@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
-const DEFAULT_GLOW_COLOR = '132, 0, 255';
+const DEFAULT_GLOW_COLOR = '87, 35, 231';
 const MOBILE_BREAKPOINT = 768;
 
 const createParticleElement = (x: number, y: number, color: string = DEFAULT_GLOW_COLOR): HTMLDivElement => {
@@ -466,9 +466,9 @@ export const MagicBentoGrid: React.FC<MagicBentoGridProps> = ({
             --border-color: #392e4e;
             --background-dark: #060010;
             --white: hsl(0, 0%, 100%);
-            --purple-primary: rgba(132, 0, 255, 1);
-            --purple-glow: rgba(132, 0, 255, 0.2);
-            --purple-border: rgba(132, 0, 255, 0.8);
+            --purple-primary: rgba(87, 35, 231, 1);
+            --purple-glow: rgba(87, 35, 231, 0.2);
+            --purple-border: rgba(87, 35, 231, 0.8);
           }
           
           .card--border-glow::after {
@@ -527,11 +527,18 @@ export const MagicBentoGrid: React.FC<MagicBentoGridProps> = ({
     );
 };
 
+import { motion } from 'framer-motion';
+
+// ... (keep previous code until MagicBentoCard definition)
+
 export const MagicBentoCard: React.FC<ParticleCardProps> = (props) => {
     const { className, style, ...rest } = props;
 
     // Base classes from reference
-    const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-[rgba(255,255,255,0.1)] font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#060010]";
+    // Removed hover:-translate-y-0.5 and hover:shadow (motion handles lift, shadow handled by motion or separate)
+    // Changed duration to 200 ease-out (transition-smooth)
+    // Added cursor-pointer as user requested "exact" match to AddGestureCard
+    const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-[rgba(255,255,255,0.1)] font-light overflow-hidden transition-all duration-200 ease-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#060010] cursor-pointer";
 
     const defaultStyle = {
         borderColor: 'var(--border-color)',
@@ -542,12 +549,19 @@ export const MagicBentoCard: React.FC<ParticleCardProps> = (props) => {
     } as React.CSSProperties;
 
     return (
-        <ParticleCard
-            className={cn(baseClasses, className)}
-            style={{ ...defaultStyle, ...style }}
-            enableTilt={true}
-            enableMagnetism={true}
-            {...rest}
-        />
+        <motion.div
+            className="h-full w-full"
+            whileHover={{ y: -4 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
+            <ParticleCard
+                className={cn(baseClasses, className)}
+                style={{ ...defaultStyle, ...style }}
+                enableTilt={true}
+                enableMagnetism={true}
+                {...rest}
+            />
+        </motion.div>
     );
 };
