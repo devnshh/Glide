@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useApp } from '@/lib/app-context';
-import { GlassCard } from '../core/glass-card';
+import { MagicBentoCard } from '../ui/magic-bento';
 import { Zap, Gauge } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
@@ -35,7 +35,7 @@ export function SpeedControl() {
     };
 
     return (
-        <GlassCard className="p-4 flex items-center gap-4">
+        <MagicBentoCard className="p-4 flex items-center gap-4">
             <div className="p-2 rounded-full bg-yellow-500/20 text-yellow-500">
                 <Gauge className="w-5 h-5" />
             </div>
@@ -64,6 +64,6 @@ export function SpeedControl() {
                     Higher speed reduces cooldowns but may cause double-triggers.
                 </p>
             </div>
-        </GlassCard>
+        </MagicBentoCard>
     );
 }

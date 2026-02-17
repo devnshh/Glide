@@ -3,14 +3,14 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { useApp } from '@/lib/app-context';
-import { GlassCard } from '../core/glass-card';
+import { MagicBentoCard } from '../ui/magic-bento';
 
 export function ActivityFeed() {
   const { state } = useApp();
 
   if (state.detections.length === 0) {
     return (
-      <GlassCard className="p-8 flex flex-col items-center justify-center gap-3 min-h-[300px] h-full">
+      <MagicBentoCard className="p-8 flex flex-col items-center justify-center gap-3 min-h-[300px] h-full">
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500/10 to-cyan-500/10 flex items-center justify-center text-4xl">
           👋
         </div>
@@ -20,12 +20,12 @@ export function ActivityFeed() {
             Perform a gesture in front of your camera to see activity
           </p>
         </div>
-      </GlassCard>
+      </MagicBentoCard>
     );
   }
 
   return (
-    <GlassCard className="p-6 flex flex-col gap-4 h-full">
+    <MagicBentoCard className="p-6 flex flex-col gap-4 h-full">
       <div>
         <h3 className="font-semibold text-foreground">Recent Activity</h3>
         <p className="text-xs text-muted-foreground">
@@ -72,6 +72,6 @@ export function ActivityFeed() {
           ))}
         </AnimatePresence>
       </div>
-    </GlassCard>
+    </MagicBentoCard>
   );
 }

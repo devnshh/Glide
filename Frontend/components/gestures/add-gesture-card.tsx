@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Plus } from 'lucide-react';
-import { GlassCard } from '../core/glass-card';
+import { MagicBentoCard } from '../ui/magic-bento';
 
 interface AddGestureCardProps {
   onClick?: () => void;
@@ -23,7 +23,7 @@ export function AddGestureCard({ onClick, delay = 0 }: AddGestureCardProps) {
         className="w-full h-full"
         whileTap={{ scale: 0.98 }}
       >
-        <GlassCard className="p-6 h-full flex flex-col items-center justify-center gap-4 border-2 border-dashed border-white/20 hover:border-cyan-500/50 transition-smooth cursor-pointer">
+        <MagicBentoCard className="p-6 h-full flex flex-col items-center justify-center gap-4 border-2 border-dashed border-white/20 hover:border-cyan-500/50 transition-smooth cursor-pointer">
           <motion.div
             className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 flex items-center justify-center"
             whileHover={{ scale: 1.1 }}
@@ -36,7 +36,7 @@ export function AddGestureCard({ onClick, delay = 0 }: AddGestureCardProps) {
               Create a new gesture
             </p>
           </div>
-        </GlassCard>
+        </MagicBentoCard>
       </motion.button>
     </motion.div>
   );

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Camera, Brain, Activity, Radio, MousePointer } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
 import { useWebSocket } from '@/lib/websocket-context';
-import { GlassCard } from '../core/glass-card';
+import { MagicBentoCard } from '../ui/magic-bento';
 
 export function SystemHealthBar() {
   const { state } = useApp();
@@ -39,7 +39,7 @@ export function SystemHealthBar() {
   ];
 
   return (
-    <GlassCard className="p-4">
+    <MagicBentoCard className="p-4">
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {healthItems.map((item, index) => {
           const Icon = item.icon;
@@ -92,6 +92,6 @@ export function SystemHealthBar() {
           );
         })}
       </div>
-    </GlassCard>
+    </MagicBentoCard>
   );
 }

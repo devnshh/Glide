@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Square, RotateCcw, Plus, Camera } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
-import { GlassCard } from '../core/glass-card';
+import { MagicBentoCard } from '../ui/magic-bento';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 
@@ -72,16 +72,16 @@ export function QuickActions() {
   };
 
   return (
-    <GlassCard className="p-6 flex flex-col gap-4">
+    <MagicBentoCard className="p-6 flex flex-col gap-4">
       <h3 className="font-semibold text-foreground">Quick Actions</h3>
 
-      {}
+      { }
 
-      {}
-      {}
-      {}
-      {}
-      {}
+      { }
+      { }
+      { }
+      { }
+      { }
 
       <motion.div
         className="space-y-2"
@@ -92,7 +92,7 @@ export function QuickActions() {
         initial="hidden"
         animate="visible"
       >
-        {}
+        { }
         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
           <Button
             onClick={toggleDetection}
@@ -124,7 +124,7 @@ export function QuickActions() {
           </Button>
         </motion.div>
 
-        {}
+        { }
         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
           <Button
             onClick={() =>
@@ -142,7 +142,7 @@ export function QuickActions() {
           </Button>
         </motion.div>
 
-        {}
+        { }
         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
           <Button
             onClick={() =>
@@ -160,7 +160,7 @@ export function QuickActions() {
           </Button>
         </motion.div>
 
-        {}
+        { }
         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
           <Button
             onClick={toggleCamera}
@@ -178,7 +178,7 @@ export function QuickActions() {
           </Button>
         </motion.div>
 
-        {}
+        { }
         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="pt-2">
           <div className="flex items-center gap-3">
             <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[3.5rem]">
@@ -197,6 +197,6 @@ export function QuickActions() {
         </motion.div>
 
       </motion.div>
-    </GlassCard>
+    </MagicBentoCard>
   );
 }

@@ -8,6 +8,7 @@ import { useApp } from '@/lib/app-context';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, ArrowRight } from 'lucide-react';
 import { Gesture } from '@/lib/types';
+import { MagicBentoGrid, MagicBentoCard } from '@/components/ui/magic-bento';
 
 export default function GesturesPage() {
   const { state, dispatch } = useApp();
@@ -62,7 +63,7 @@ export default function GesturesPage() {
         initial="hidden"
         animate="visible"
       >
-        {}
+        { }
         <motion.div variants={itemVariants} className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
             Gestures
@@ -72,7 +73,7 @@ export default function GesturesPage() {
           </p>
         </motion.div>
 
-        {}
+        { }
         <AnimatePresence>
           {state.needsRetrain && (
             <motion.div
@@ -107,30 +108,32 @@ export default function GesturesPage() {
           )}
         </AnimatePresence>
 
-        {}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-          variants={containerVariants}
-        >
-          {}
-          <motion.div variants={itemVariants}>
-            <AddGestureCard onClick={handleAddGesture} delay={0} />
-          </motion.div>
-
-          {}
-          {state.gestures.map((gesture, index) => (
-            <motion.div key={gesture.id} variants={itemVariants}>
-              <GestureCard
-                gesture={gesture}
-                onEdit={() => handleEditGesture(gesture)}
-                onDelete={handleDeleteGesture}
-                delay={index * 0.05}
-              />
+        { }
+        <MagicBentoGrid>
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+            variants={containerVariants}
+          >
+            { }
+            <motion.div variants={itemVariants}>
+              <AddGestureCard onClick={handleAddGesture} delay={0} />
             </motion.div>
-          ))}
-        </motion.div>
 
-        {}
+            { }
+            {state.gestures.map((gesture, index) => (
+              <motion.div key={gesture.id} variants={itemVariants}>
+                <GestureCard
+                  gesture={gesture}
+                  onEdit={() => handleEditGesture(gesture)}
+                  onDelete={handleDeleteGesture}
+                  delay={index * 0.05}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </MagicBentoGrid>
+
+        { }
         {state.gestures.length === 0 && (
           <motion.div
             variants={itemVariants}
@@ -144,43 +147,45 @@ export default function GesturesPage() {
           </motion.div>
         )}
 
-        {}
+        {/* Stats Grid */}
         {state.gestures.length > 0 && (
-          <motion.div
-            variants={itemVariants}
-            className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4"
-          >
-            <div className="glass-sm p-4 rounded-lg">
-              <p className="text-muted-foreground text-xs mb-1">Total Gestures</p>
-              <p className="text-2xl font-bold text-foreground">
-                {state.gestures.length}
-              </p>
-            </div>
-            <div className="glass-sm p-4 rounded-lg">
-              <p className="text-muted-foreground text-xs mb-1">
-                Total Samples
-              </p>
-              <p className="text-2xl font-bold text-foreground">
-                {state.gestures.reduce((sum, g) => sum + g.sampleCount, 0)}
-              </p>
-            </div>
-            <div className="glass-sm p-4 rounded-lg">
-              <p className="text-muted-foreground text-xs mb-1">
-                Average Confidence
-              </p>
-              <p className="text-2xl font-bold text-foreground">
-                {Math.round(
-                  (state.gestures.reduce(
-                    (sum, g) => sum + (g.confidence || 0),
-                    0
-                  ) /
-                    state.gestures.length) *
-                  100
-                )}
-                %
-              </p>
-            </div>
-          </motion.div>
+          <MagicBentoGrid>
+            <motion.div
+              variants={itemVariants}
+              className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4"
+            >
+              <MagicBentoCard className="p-4">
+                <p className="text-muted-foreground text-xs mb-1">Total Gestures</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {state.gestures.length}
+                </p>
+              </MagicBentoCard>
+              <MagicBentoCard className="p-4">
+                <p className="text-muted-foreground text-xs mb-1">
+                  Total Samples
+                </p>
+                <p className="text-2xl font-bold text-foreground">
+                  {state.gestures.reduce((sum, g) => sum + g.sampleCount, 0)}
+                </p>
+              </MagicBentoCard>
+              <MagicBentoCard className="p-4">
+                <p className="text-muted-foreground text-xs mb-1">
+                  Average Confidence
+                </p>
+                <p className="text-2xl font-bold text-foreground">
+                  {Math.round(
+                    (state.gestures.reduce(
+                      (sum, g) => sum + (g.confidence || 0),
+                      0
+                    ) /
+                      state.gestures.length) *
+                    100
+                  )}
+                  %
+                </p>
+              </MagicBentoCard>
+            </motion.div>
+          </MagicBentoGrid>
         )}
       </motion.div>
     </AppShell>

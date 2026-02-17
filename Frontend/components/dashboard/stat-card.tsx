@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
-import { GlassCard } from '../core/glass-card';
+import { MagicBentoCard } from '../ui/magic-bento';
 
 interface StatCardProps {
   icon: ReactNode;
@@ -20,13 +20,8 @@ export function StatCard({
   trend,
 }: StatCardProps) {
   return (
-    <GlassCard
-      className="p-6 flex flex-col gap-4 h-full"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      { }
+    <MagicBentoCard className="p-6 flex flex-col gap-4 h-full">
+      {/* Icon */}
       <motion.div
         className="w-12 h-12 rounded-lg bg-gradient-to-br from-indigo-500/20 to-cyan-500/20 flex items-center justify-center text-indigo-400"
         whileHover={{ scale: 1.1 }}
@@ -34,11 +29,11 @@ export function StatCard({
         {icon}
       </motion.div>
 
-      { }
+      {/* Content */}
       <div className="flex flex-col gap-2">
         <p className="text-sm text-muted-foreground font-medium">{label}</p>
 
-        { }
+        {/* Value */}
         <div className="flex items-baseline gap-1">
           <motion.div
             className="text-3xl font-bold text-foreground"
@@ -53,7 +48,7 @@ export function StatCard({
           )}
         </div>
 
-        { }
+        {/* Trend */}
         {trend && (
           <div
             className={`text-xs font-medium ${trend.direction === 'up' ? 'text-emerald-400' : 'text-red-400'
@@ -63,6 +58,6 @@ export function StatCard({
           </div>
         )}
       </div>
-    </GlassCard>
+    </MagicBentoCard>
   );
 }
