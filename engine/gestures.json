@@ -1,0 +1,37 @@
+[
+  {
+    "id": "er5pws6",
+    "name": "Palm",
+    "emoji": "\ud83d\udc4b",
+    "action": "volume_up",
+    "sampleCount": 50
+  },
+  {
+    "id": "ih9uq87",
+    "name": "Fist",
+    "emoji": "\ud83d\udc4b",
+    "action": "volume_down",
+    "sampleCount": 50
+  },
+  {
+    "id": "stxqmfi",
+    "name": "Up",
+    "emoji": "\u270c\ufe0f",
+    "action": "brightness_up",
+    "sampleCount": 30
+  },
+  {
+    "id": "gz30sea",
+    "name": "Down",
+    "emoji": "\ud83d\udc4b",
+    "action": "brightness_down",
+    "sampleCount": 50
+  },
+  {
+    "id": "peace",
+    "name": "Peace",
+    "emoji": "\ud83d\udc4b",
+    "action": "toggle_cursor",
+    "sampleCount": 30
+  }
+]
