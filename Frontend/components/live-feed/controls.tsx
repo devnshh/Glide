@@ -9,7 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { useState, useEffect } from 'react';
 
 export function LiveFeedControls() {
-  const { state, dispatch } = useApp();
+  const { state, updateSystemStatus } = useApp();
 
   const [localThreshold, setLocalThreshold] = useState([75]);
 
@@ -21,54 +21,22 @@ export function LiveFeedControls() {
 
   const handleThresholdChange = async (value: number[]) => {
     setLocalThreshold(value);
-    try {
-      await fetch('http://localhost:8053/system/status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ confidenceThreshold: value[0] })
-      });
-    } catch (e) {
-      console.error("Failed to update threshold", e);
-    }
+    await updateSystemStatus({ confidenceThreshold: value[0] });
   };
 
   const toggleDetection = async () => {
     const newStatus = !state.systemStatus.detectionActive;
-    try {
-      await fetch('http://localhost:8053/system/status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ detectionActive: newStatus })
-      });
-      dispatch({
-        type: 'UPDATE_SYSTEM_STATUS',
-        payload: { detectionActive: newStatus },
-      });
-    } catch (e) {
-      console.error("Failed to toggle detection", e);
-    }
+    await updateSystemStatus({ detectionActive: newStatus });
   };
 
   const toggleCamera = async () => {
     const newStatus = state.systemStatus.camera === 'on' ? 'off' : 'on';
-    try {
-      await fetch('http://localhost:8053/system/status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ camera: newStatus })
-      });
-      dispatch({
-        type: 'UPDATE_SYSTEM_STATUS',
-        payload: { camera: newStatus },
-      });
-    } catch (e) {
-      console.error("Failed to toggle camera", e);
-    }
+    await updateSystemStatus({ camera: newStatus });
   };
 
   return (
     <GlassCard className="p-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-      {}
+      { }
       <motion.div className="flex-1">
         <Button
           onClick={toggleDetection}
@@ -100,7 +68,7 @@ export function LiveFeedControls() {
         </Button>
       </motion.div>
 
-      {}
+      { }
       <motion.div className="flex-1">
         <Button
           onClick={toggleCamera}
@@ -125,7 +93,7 @@ export function LiveFeedControls() {
         </Button>
       </motion.div>
 
-      {}
+      { }
       <div className="flex flex-col sm:flex-row items-center gap-4">
         <div className="flex items-center gap-3 w-40 min-w-[200px]">
           <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[3.5rem]">

@@ -31,10 +31,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
       }
 
-      const data = await response.json();
-      if (data.current) {
 
-        dispatch({ type: 'UPDATE_SYSTEM_STATUS', payload: data.current });
+      const data = await response.json();
+      if (data.systemStatus) {
+        dispatch({ type: 'UPDATE_SYSTEM_STATUS', payload: data.systemStatus });
       }
 
     } catch (error) {
