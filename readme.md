@@ -83,8 +83,14 @@ Glide/
 
 You can run Glide using **Docker** (Recommended) or a **Local Installation**.
 
+### ⚠️ Critical Note for Python 3.13 Users
+**MediaPipe does NOT support Python 3.13 yet.**
+If you are on macOS with Python 3.13 default:
+1.  **Use Docker (Option 1)** - This is the easiest and guaranteed fix.
+2.  OR Install Python 3.11 (`brew install python@3.11`) and use Option 3 manually.
+
 ### Option 1: 🐳 Docker (Recommended)
-Run the entire stack in isolated containers. This ensures compatibility with any Python version.
+Run the entire stack in isolated containers. **This avoids all Python version issues.**
 
 ```bash
 # Start backend and frontend
@@ -94,7 +100,8 @@ docker-compose up --build
 - **Engine API**: http://localhost:8053
 
 ### Option 2: ⚡ Quick Install Script
-Use the provided script to set up everything automatically on your local machine (Brew must be installed)
+Use the provided script to set up everything automatically on your local machine.
+**Requires**: `brew` installed and `python3.10` or `python3.11` available.
 
 ```bash
 chmod +x install.sh
