@@ -68,8 +68,8 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        mono: ['var(--font-jetbrains-mono)'],
+        sans: ['var(--font-inter)', 'Inter Fallback', 'sans-serif'],
+        mono: ['var(--font-inter)', 'Inter Fallback', 'sans-serif'],
       },
       backdropBlur: {
         glass: '8px',

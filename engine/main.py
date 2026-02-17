@@ -172,7 +172,8 @@ def camera_loop():
                     "total_detections": state.total_detections,
                     "actions_executed": state.actions_executed,
                     "confidence_threshold": state.confidence_threshold,
-                    "speed_factor": state.speed_factor
+                    "speed_factor": state.speed_factor,
+                    "cursor_mode": state.cursor_mode
                 }
             })
             
@@ -271,10 +272,15 @@ def detection_loop():
                                   print(f"Cursor Mode: {'ON' if state.cursor_mode else 'OFF'}")
                                   state.last_action_time["toggle_cursor"] = current_time
                                   message_queue.put({
-                                        "type": "status", 
+                                        "type": "status",
                                         "data": {
-                                            "detectionActive": state.detection_active,
-                                            "cursorMode": state.cursor_mode
+                                            "detection_active": state.detection_active,
+                                            "cursor_mode": state.cursor_mode,
+                                            "camera_status": "on" if state.camera_running else "off",
+                                            "model_status": "ready" if classifier.model is not None else "loading",
+                                            "fps": 0,
+                                            "confidence_threshold": state.confidence_threshold,
+                                            "speed_factor": state.speed_factor
                                         }
                                   })
                              return

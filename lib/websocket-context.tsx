@@ -60,6 +60,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
                 detectionActive: statusData.detectionActive,
                 fps: statusData.fps,
                 wsConnected: true,
+                cursorMode: statusData.cursorMode ?? false,
               },
             });
           } else if (message.type === 'detection') {

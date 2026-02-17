@@ -88,6 +88,7 @@ export interface StatusMessage extends WebSocketMessage {
     modelReady: boolean;
     fps: number;
     detectionActive: boolean;
+    cursorMode?: boolean;
   };
 }
 
