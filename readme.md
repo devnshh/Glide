@@ -14,40 +14,41 @@
 </div>
 
 Glide combines real-time computer vision with a modern, glassmorphism-styled dashboard for a seamless and futuristic user experience.
-## Features
 
-### Computer Vision and AI
-- Real-Time Hand Tracking: High-fidelity landmark detection using MediaPipe.
-- Customizable Gesture Recognition: Custom Random Forest classifier (Scikit-learn) for high-accuracy gesture identification.
-- Data Collection Engine: Capture landmark samples in real-time to train new gestures.
-- Instant Retraining: Retrain the AI model directly from the UI to incorporate new gestures on-the-fly.
+## ✨ Features
 
-### Dynamic Desktop Control
-- Precision Cursor Control: Smooth mouse movement using vector projection from hand landmarks to minimize jitter.
-- Gesture-Based Clicking:
-    - Left Click: Short pinch gesture.
-    - Double Click: Two rapid short pinches.
-    - Right Click: Long hold pinch gesture.
-- Global Action Mapping: Map specific gestures to a wide range of system actions.
+### 🤖 Computer Vision and AI
+- **Real-Time Hand Tracking**: High-fidelity landmark detection using **MediaPipe**.
+- **Customizable Gesture Recognition**: Custom Random Forest classifier (Scikit-learn) for high-accuracy gesture identification.
+- **Data Collection Engine**: Capture landmark samples in real-time to train new gestures.
+- **Instant Retraining**: Retrain the AI model directly from the UI to incorporate new gestures on-the-fly.
 
-### Comprehensive Action Library
-- Media Controls: Play/Pause, Next Track, Previous Track, Mute.
-- Audio Management: Volume Up, Volume Down.
-- Display Settings: Brightness Up, Brightness Down.
-- Navigation: Scroll Up, Scroll Down, Switch Tab (Alt+Tab / Cmd+Tab).
-- System Utilities: Screenshot capture, Minimize Window.
+### 🖱️ Dynamic Desktop Control
+- **Precision Cursor Control**: Smooth mouse movement using vector projection from hand landmarks to minimize jitter.
+- **Gesture-Based Clicking**:
+    - **Left Click**: Short pinch gesture.
+    - **Double Click**: Two rapid short pinches.
+    - **Right Click**: Long hold pinch gesture.
+- **Global Action Mapping**: Map specific gestures to a wide range of system actions.
 
-### Professional Dashboard
-- Live Camera Feed: Low-latency video stream with real-time hand landmark overlays.
-- Real-Time Statistics: Monitor FPS, total detections, actions executed, and model confidence scores.
-- System Status: Instant feedback on camera status, model readiness, and WebSocket connectivity.
-- Gesture Management: Create, edit, and delete gestures and their assigned actions.
+### 📚 Comprehensive Action Library
+- **Media Controls**: Play/Pause, Next Track, Previous Track, Mute.
+- **Audio Management**: Volume Up, Volume Down.
+- **Display Settings**: Brightness Up, Brightness Down.
+- **Navigation**: Scroll Up, Scroll Down, Switch Tab (Alt+Tab / Cmd+Tab).
+- **System Utilities**: Screenshot capture, Minimize Window.
 
-### Communication and Scalability
-- WebSocket Integration: Full-duplex communication between the Python backend and React frontend for instantaneous feedback.
-- Cross-Platform Support: Optimized hotkeys and system controls for both macOS and Windows.
+### 📊 Professional Dashboard
+- **Live Camera Feed**: Low-latency video stream with real-time hand landmark overlays.
+- **Real-Time Statistics**: Monitor FPS, total detections, actions executed, and model confidence scores.
+- **System Status**: Instant feedback on camera status, model readiness, and WebSocket connectivity.
+- **Gesture Management**: Create, edit, and delete gestures and their assigned actions.
 
-## Project Structure
+### ⚡ Communication and Scalability
+- **WebSocket Integration**: Full-duplex communication between the Python backend and React frontend for instantaneous feedback.
+- **Cross-Platform Support**: Optimized hotkeys and system controls for both macOS and Windows.
+
+## 📂 Project Structure
 
 ```text
 Glide/
@@ -74,14 +75,14 @@ Glide/
 └── readme.md                  # Project documentation
 ```
 
-## Setup and Installation
+## 🛠️ Setup and Installation
 
-### Prerequisites
+### 📋 Prerequisites
 - Python 3.9 or higher
 - Node.js 18 or higher (pnpm recommended)
 - Integrated or external webcam
 
-### 1. Engine Configuration (Backend)
+### 1. ⚙️ Engine Configuration (Backend)
 Navigate to the engine directory and initialize the environment:
 
 ```bash
@@ -97,7 +98,7 @@ python3 main.py
 ```
 Default endpoint: http://localhost:8053
 
-### 2. Dashboard Configuration (Frontend)
+### 2. 🖥️ Dashboard Configuration (Frontend)
 From the root directory, install dependencies and start the UI:
 
 ```bash
@@ -112,7 +113,7 @@ pnpm dev
 ```
 Dashboard address: http://localhost:3000
 
-## Usage Guide
+## 🚀 Usage Guide
 
 1. **Initialize**: Ensure the backend and frontend are running. Open the dashboard in your browser.
 2. **Connectivity**: Verify that Camera, Model, and WebSocket indicators are active.
@@ -123,21 +124,21 @@ Dashboard address: http://localhost:3000
 4. **Retrain**: Click Retrain Model to synchronize the AI classifier with your new data.
 5. **Control**: Toggle Start Detection and use your hand gestures to interact with your system.
 
-## Technical Stack
+## 🏗️ Technical Stack
 
-### Backend
-- FastAPI: High-performance asynchronous API framework.
-- MediaPipe: Google's modular ML framework for computer vision.
-- Scikit-learn: Machine learning library for the Random Forest classifier.
-- OpenCV: Real-time image processing.
-- PyAutoGUI: Cross-platform GUI automation.
+### 🐍 Backend
+- **FastAPI**: High-performance asynchronous API framework.
+- **MediaPipe**: Google's modular ML framework for computer vision.
+- **Scikit-learn**: Machine learning library for the Random Forest classifier.
+- **OpenCV**: Real-time image processing.
+- **PyAutoGUI**: Cross-platform GUI automation.
 
-### Frontend
-- Next.js: React framework for performance and routing.
-- Tailwind CSS: Utility-first styling for the glassmorphism design.
-- Framer Motion: Production-ready motion library for animations.
-- Recharts: Composable charting library for data visualization.
-- Lucide React: Clean and consistent icon library.
+### ⚛️ Frontend
+- **Next.js**: React framework for performance and routing.
+- **Tailwind CSS**: Utility-first styling for the glassmorphism design.
+- **Framer Motion**: Production-ready motion library for animations.
+- **Recharts**: Composable charting library for data visualization.
+- **Lucide React**: Clean and consistent icon library.
 
-## License
+## 📜 License
 This project is licensed under the MIT License.
