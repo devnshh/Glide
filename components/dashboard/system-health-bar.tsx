@@ -39,7 +39,7 @@ export function SystemHealthBar() {
   ];
 
   return (
-    <MagicBentoCard className="p-4">
+    <MagicBentoCard className="p-4" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {healthItems.map((item, index) => {
           const Icon = item.icon;

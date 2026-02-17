@@ -95,6 +95,17 @@ detector = GestureDetector()
 classifier = GestureClassifier()
 mouse_controller = MouseController()
 
+# Lightweight MediaPipe instance for real-time landmark drawing in camera loop
+import mediapipe as mp
+_draw_hands = mp.solutions.hands.Hands(
+    static_image_mode=False,
+    max_num_hands=1,
+    min_detection_confidence=0.5,
+    min_tracking_confidence=0.4
+)
+_draw_mp_draw = mp.solutions.drawing_utils
+_draw_mp_hands = mp.solutions.hands
+
 def camera_loop():
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
@@ -119,17 +130,21 @@ def camera_loop():
         # Update Shared State for Detection Thread (raw frame)
         # We process a COPY to avoid threading issues
         state.latest_frame_raw = frame.copy()
-        
-        # Draw Last Known Landmarks (Thread Safe)
-        with state.draw_lock:
-             if state.last_known_landmarks:
-                 detector.mp_draw.draw_landmarks(
-                     frame, 
-                     state.last_known_landmarks, 
-                     detector.mp_hands.HAND_CONNECTIONS
-                 )
-        
-        # Stream the RAW frame (with overlay drawn on it)
+
+        # Real-time landmark drawing directly on current frame
+        # Uses a separate lightweight MediaPipe instance to avoid latency
+        # from the detection thread's async processing
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        rgb.flags.writeable = False
+        draw_results = _draw_hands.process(rgb)
+        rgb.flags.writeable = True
+        if draw_results.multi_hand_landmarks:
+            for hand_lm in draw_results.multi_hand_landmarks:
+                _draw_mp_draw.draw_landmarks(
+                    frame, hand_lm, _draw_mp_hands.HAND_CONNECTIONS
+                )
+
+        # Stream the frame (with overlay drawn on it)
         try:
              # Fast encoding, high quality (default)
              encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 85]
@@ -440,7 +455,7 @@ def gen_frames():
         if state.latest_frame:
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + state.latest_frame + b'\r\n')
-        time.sleep(0.04)
+        time.sleep(0.016)
 
 @app.get("/video_feed")
 def video_feed():

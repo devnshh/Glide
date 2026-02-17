@@ -52,8 +52,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     className={cn(
                       'px-4 py-2 rounded-lg flex items-center gap-2 text-sm transition-smooth relative',
                       isActive
-                        ? 'text-primary font-medium bg-white/5'
-                        : 'text-muted-foreground hover:text-foreground'
+                        ? 'text-white font-medium bg-white/5'
+                        : 'text-white/70 hover:text-white'
                     )}
                     whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
                     whileTap={{ scale: 0.95 }}
@@ -114,8 +114,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   className={cn(
                     'px-3 py-1.5 rounded-md flex items-center gap-2 text-xs whitespace-nowrap transition-smooth',
                     isActive
-                      ? 'text-primary font-medium bg-white/5'
-                      : 'text-muted-foreground'
+                      ? 'text-white font-medium bg-white/5'
+                      : 'text-white/70'
                   )}
                   whileTap={{ scale: 0.95 }}
                 >

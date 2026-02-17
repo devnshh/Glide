@@ -12,7 +12,7 @@ export function DetectionPanel() {
 
   if (!currentDetection) {
     return (
-      <GlassCard className="p-6 flex flex-col items-center justify-center gap-4 h-full min-h-[600px]">
+      <GlassCard className="p-6 flex flex-col items-center justify-center gap-4 h-full">
         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#301088] to-[#5723E7] flex items-center justify-center shadow-lg shadow-[#5723E7]/20 border border-white/10">
           <span className="text-4xl animate-pulse">👁️</span>
         </div>
@@ -29,7 +29,7 @@ export function DetectionPanel() {
   }
 
   return (
-    <GlassCard className="p-6 flex flex-col gap-6 h-full min-h-[600px]">
+    <GlassCard className="p-6 flex flex-col gap-6 h-full overflow-hidden">
       { }
       <div>
         <p className="text-xs text-white mb-3">Current Detection</p>

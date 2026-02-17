@@ -50,7 +50,7 @@ export default function LiveFeedPage() {
         <MagicBentoGrid>
           <motion.div
             variants={itemVariants}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-[600px] items-stretch"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[680px] items-stretch overflow-hidden"
           >
             {/* Camera Feed Section */}
             <div className="lg:col-span-2 h-full">
@@ -62,7 +62,7 @@ export default function LiveFeedPage() {
             </div>
 
             {/* Detection Panel Section */}
-            <div className="h-full">
+            <div className="h-full overflow-hidden">
               <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
                 <DetectionPanel />
               </MagicBentoCard>

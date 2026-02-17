@@ -35,7 +35,7 @@ export function SpeedControl() {
     };
 
     return (
-        <MagicBentoCard className="p-4 flex items-center gap-4">
+        <MagicBentoCard className="p-4 flex items-center gap-4" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
             <div className="p-2 rounded-full bg-yellow-500/20 text-yellow-500">
                 <Gauge className="w-5 h-5" />
             </div>
@@ -60,9 +60,6 @@ export function SpeedControl() {
                     onValueCommit={handleSpeedCommit}
                     className="py-2"
                 />
-                <p className="text-xs text-muted-foreground">
-                    Higher speed reduces cooldowns but may cause double-triggers.
-                </p>
             </div>
         </MagicBentoCard>
     );

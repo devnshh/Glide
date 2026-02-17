@@ -37,19 +37,16 @@ export default function DashboardPage() {
   return (
     <AppShell>
       <motion.div
-        className="px-4 sm:px-6 py-8 max-w-7xl mx-auto"
+        className="px-4 sm:px-6 py-8 max-w-7xl mx-auto overflow-hidden"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         { }
-        <motion.div variants={itemVariants} className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+        <motion.div variants={itemVariants} className="mb-6">
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
             Dashboard
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            Real-time monitoring and management of your gesture recognition system
-          </p>
         </motion.div>
 
         { }

@@ -10,7 +10,7 @@ export function ActivityFeed() {
 
   if (state.detections.length === 0) {
     return (
-      <MagicBentoCard className="p-8 flex flex-col items-center justify-center gap-3 min-h-[300px] h-full">
+      <MagicBentoCard className="p-8 flex flex-col items-center justify-center gap-3 min-h-[300px] h-full" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500/10 to-cyan-500/10 flex items-center justify-center text-4xl">
           👋
         </div>
@@ -25,7 +25,7 @@ export function ActivityFeed() {
   }
 
   return (
-    <MagicBentoCard className="p-6 flex flex-col gap-4 h-full">
+    <MagicBentoCard className="p-6 flex flex-col gap-4 h-full" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
       <div>
         <h3 className="font-semibold text-foreground">Recent Activity</h3>
         <p className="text-xs text-muted-foreground">
@@ -34,7 +34,7 @@ export function ActivityFeed() {
       </div>
 
       { }
-      <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
+      <div className="space-y-2 max-h-[400px] overflow-hidden pr-2">
         <AnimatePresence>
           {state.detections.map((detection, index) => (
             <motion.div

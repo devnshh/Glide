@@ -72,7 +72,7 @@ export function QuickActions() {
   };
 
   return (
-    <MagicBentoCard className="p-6 flex flex-col gap-4">
+    <MagicBentoCard className="p-6 flex flex-col gap-4" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
       <h3 className="font-semibold text-foreground">Quick Actions</h3>
 
       { }

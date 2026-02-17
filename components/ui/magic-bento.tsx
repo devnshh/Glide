@@ -541,7 +541,7 @@ export const MagicBentoCard: React.FC<MagicBentoCardProps> = (props) => {
     // Base classes from reference
     // Changed to border-transparent to ensure no "white border" artifact appears
     // The glow comes from card--border-glow::after which overlays the border area
-    const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-transparent font-light overflow-hidden transition-all duration-200 ease-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#130b2e]";
+    const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-transparent font-light overflow-hidden transition-all duration-200 ease-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#1a1035]";
 
     const defaultStyle = {
         borderColor: 'var(--border-color)',
@@ -561,8 +561,6 @@ export const MagicBentoCard: React.FC<MagicBentoCardProps> = (props) => {
             <ParticleCard
                 className={cn(baseClasses, className)}
                 style={{ ...defaultStyle, ...style }}
-                enableTilt={true}
-                enableMagnetism={true}
                 {...rest}
             />
         </motion.div>

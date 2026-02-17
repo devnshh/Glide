@@ -20,7 +20,7 @@ export function StatCard({
   trend,
 }: StatCardProps) {
   return (
-    <MagicBentoCard className="p-6 flex flex-col gap-4 h-full">
+    <MagicBentoCard className="p-6 flex flex-col gap-4 h-full" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
       {/* Icon */}
       <motion.div
         className="w-12 h-12 rounded-lg bg-gradient-to-br from-indigo-500/20 to-cyan-500/20 flex items-center justify-center text-indigo-400"
