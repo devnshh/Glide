@@ -139,6 +139,26 @@ class DesktopController:
         else:
             pyautogui.press("prevtrack")
 
+    def switch_desktop_left(self):
+        """Switch to the previous virtual desktop/workspace.
+        macOS: Ctrl+Left (same as 4-finger swipe left).
+        Windows: Win+Ctrl+Left."""
+        print("DesktopController: Switch Desktop Left")
+        if self._system == "Darwin":
+            pyautogui.hotkey("ctrl", "left")
+        else:
+            pyautogui.hotkey("win", "ctrl", "left")
+
+    def switch_desktop_right(self):
+        """Switch to the next virtual desktop/workspace.
+        macOS: Ctrl+Right (same as 4-finger swipe right).
+        Windows: Win+Ctrl+Right."""
+        print("DesktopController: Switch Desktop Right")
+        if self._system == "Darwin":
+            pyautogui.hotkey("ctrl", "right")
+        else:
+            pyautogui.hotkey("win", "ctrl", "right")
+
     def scroll_up(self):
         print("DesktopController: Scroll Up")
         pyautogui.scroll(5)

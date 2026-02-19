@@ -39,6 +39,10 @@ def execute_action(action_name):
 
         elif action_name == "switch_tab":
             desktop_controller.switch_tab()
+        elif action_name == "switch_desktop_left":
+            desktop_controller.switch_desktop_left()
+        elif action_name == "switch_desktop_right":
+            desktop_controller.switch_desktop_right()
         elif action_name == "screenshot":
             desktop_controller.screenshot()
         elif action_name == "minimize_window":

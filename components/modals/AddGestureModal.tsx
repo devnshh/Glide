@@ -24,6 +24,8 @@ const AVAILABLE_ACTIONS = [
   { id: 'brightness_up', label: 'Brightness Up', icon: '☀️', shortcut: 'Bright+' },
   { id: 'brightness_down', label: 'Brightness Down', icon: '🌙', shortcut: 'Bright-' },
   { id: 'toggle_cursor', label: 'Toggle Cursor Mode', icon: '🖱️', shortcut: 'Gesture' },
+  { id: 'switch_desktop_left', label: 'Desktop Left', icon: '⬅️', shortcut: 'Ctrl+←' },
+  { id: 'switch_desktop_right', label: 'Desktop Right', icon: '➡️', shortcut: 'Ctrl+→' },
 ];
 
 const GESTURE_EMOJIS = ['👋', '✌️', '👍', '👎', '🤞', '🤟', '🖐️', '👈', '👉', '☝️', '👆', '🤘'];

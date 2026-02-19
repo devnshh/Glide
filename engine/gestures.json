@@ -47,5 +47,12 @@
     "emoji": "\ud83d\udc46",
     "action": "mute",
     "sampleCount": 30
+  },
+  {
+    "id": "switch_left",
+    "name": "Switch Left",
+    "emoji": "\u270c\ufe0f",
+    "action": "switch_desktop_left",
+    "sampleCount": 30
   }
 ]
