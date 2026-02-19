@@ -43,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-transparent text-foreground min-h-screen`}>
+      <body suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-transparent text-foreground min-h-screen`}>
         {/* Silk Background */}
         <div className="fixed inset-0 -z-10 h-full w-full">
           <Silk

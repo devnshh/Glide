@@ -12,19 +12,24 @@ interface CameraFeedProps {
 export function CameraFeed({ className }: CameraFeedProps) {
   const { state } = useApp();
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [timestamp, setTimestamp] = useState(Date.now());
-  const feedUrl = `http://localhost:8053/video_feed?t=${timestamp}`;
+  const [loading, setLoading] = useState(true);
+  const [timestamp, setTimestamp] = useState(0);
   const isCameraOn = state.systemStatus.camera === 'on';
+
+  const feedUrl = timestamp > 0 ? `http://localhost:8053/video_feed?t=${timestamp}` : null;
 
   useEffect(() => {
     if (isCameraOn) {
       setLoading(true);
       setError(false);
-      setTimestamp(Date.now());
-
-      const timer = setTimeout(() => setLoading(false), 3000);
-      return () => clearTimeout(timer);
+      const reconnectTimer = setTimeout(() => {
+        setTimestamp(Date.now());
+      }, 400);
+      const loadTimer = setTimeout(() => setLoading(false), 3500);
+      return () => {
+        clearTimeout(reconnectTimer);
+        clearTimeout(loadTimer);
+      };
     }
   }, [isCameraOn]);
 
@@ -52,13 +57,16 @@ export function CameraFeed({ className }: CameraFeedProps) {
             transition={{ duration: 0.5 }}
             className="w-full h-full relative"
           >
-            <img
-              src={feedUrl}
-              alt="Live Camera Feed"
-              className="w-full h-full object-cover"
-              onLoad={handleImageLoad}
-              onError={handleImageError}
-            />
+            {feedUrl && (
+              <img
+                key={timestamp}
+                src={feedUrl}
+                alt="Live Camera Feed"
+                className="w-full h-full object-cover"
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+              />
+            )}
             {loading && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
                 <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
