@@ -285,9 +285,11 @@ def detection_loop():
                                   })
                              return
 
-                          # Normal Action
+                          # Normal Action — cooldown is scaled by speed_factor so higher
+                          # speed means shorter cooldowns and faster gesture execution.
                           last_time = state.last_action_time.get(act_name, 0)
-                          cooldown = ACTION_COOLDOWNS.get(act_name, 0.5)
+                          base_cooldown = ACTION_COOLDOWNS.get(act_name, 0.5)
+                          cooldown = base_cooldown / max(state.speed_factor, 0.1)
 
                           if current_time - last_time > cooldown:
                               print(f"Executing: {act_name} for {gesture_name}")
@@ -314,8 +316,9 @@ def detection_loop():
                       # Only notify if confidence is ABOVE threshold
                       should_notify = False
                       if confidence_score > state.confidence_threshold:
-                          # Debounce notifications
-                          if current_time - state.last_notification_time > 0.5:
+                          # Debounce notifications — scale with speed_factor
+                          notification_debounce = 0.5 / max(state.speed_factor, 0.1)
+                          if current_time - state.last_notification_time > notification_debounce:
                               if state.cursor_mode:
                                   # Only notify toggle in cursor mode
                                   if action_name == "toggle_cursor" and confidence_score > 0.8:

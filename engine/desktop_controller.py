@@ -24,7 +24,7 @@ class DesktopController:
         if platform.system() == "Darwin":
             import os
 
-            os.system("osascript -e 'set volume output volume (output volume of (get volume settings) + 6)'")
+            os.system("osascript -e 'set volume output volume (output volume of (get volume settings) + 8)'")
         else:
             pyautogui.press("volumeup")
 
@@ -32,7 +32,7 @@ class DesktopController:
         print("DesktopController: Volume Down")
         if platform.system() == "Darwin":
             import os
-            os.system("osascript -e 'set volume output volume (output volume of (get volume settings) - 6)'")
+            os.system("osascript -e 'set volume output volume (output volume of (get volume settings) - 8)'")
         else:
             pyautogui.press("volumedown")
 

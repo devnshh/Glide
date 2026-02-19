@@ -17,9 +17,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Glide - Gesture Control Dashboard',
+  title: 'Glide',
   description: 'Premium gesture-based desktop control with real-time WebSocket updates',
-  generator: 'v0.app',
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
