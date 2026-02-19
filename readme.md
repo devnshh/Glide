@@ -15,15 +15,15 @@
 
 Glide combines real-time computer vision with a modern, glassmorphism-styled dashboard for a seamless and futuristic user experience.
 
-## ✨ Features
+## Features
 
-### 🤖 Computer Vision and AI
+### Computer Vision and AI
 - **Real-Time Hand Tracking**: High-fidelity landmark detection using **MediaPipe**.
 - **Customizable Gesture Recognition**: Custom Random Forest classifier (Scikit-learn) for high-accuracy gesture identification.
 - **Data Collection Engine**: Capture landmark samples in real-time to train new gestures.
 - **Instant Retraining**: Retrain the AI model directly from the UI to incorporate new gestures on-the-fly.
 
-### 🖱️ Dynamic Desktop Control
+### Dynamic Desktop Control
 - **Precision Cursor Control**: Smooth mouse movement using vector projection from hand landmarks to minimize jitter.
 - **Gesture-Based Clicking**:
     - **Left Click**: Short pinch gesture.
@@ -31,24 +31,24 @@ Glide combines real-time computer vision with a modern, glassmorphism-styled das
     - **Right Click**: Long hold pinch gesture.
 - **Global Action Mapping**: Map specific gestures to a wide range of system actions.
 
-### 📚 Comprehensive Action Library
+### Comprehensive Action Library
 - **Media Controls**: Play/Pause, Next Track, Previous Track, Mute.
 - **Audio Management**: Volume Up, Volume Down.
 - **Display Settings**: Brightness Up, Brightness Down.
 - **Navigation**: Scroll Up, Scroll Down, Switch Tab (Alt+Tab / Cmd+Tab).
 - **System Utilities**: Screenshot capture, Minimize Window.
 
-### 📊 Professional Dashboard
+### Professional Dashboard
 - **Live Camera Feed**: Low-latency video stream with real-time hand landmark overlays.
 - **Real-Time Statistics**: Monitor FPS, total detections, actions executed, and model confidence scores.
 - **System Status**: Instant feedback on camera status, model readiness, and WebSocket connectivity.
 - **Gesture Management**: Create, edit, and delete gestures and their assigned actions.
 
-### ⚡ Communication and Scalability
+### Communication and Scalability
 - **WebSocket Integration**: Full-duplex communication between the Python backend and React frontend for instantaneous feedback.
 - **Cross-Platform Support**: Optimized hotkeys and system controls for both macOS and Windows.
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 Glide/
@@ -79,17 +79,17 @@ Glide/
 └── readme.md                  # Project documentation
 ```
 
-## 🛠️ Setup and Installation
+## Setup and Installation
 
 You can run Glide using **Docker** (Recommended) or a **Local Installation**.
 
-### ⚠️ Critical Note for Python 3.13 Users
+### Critical Note for Python 3.13 Users
 **MediaPipe does NOT support Python 3.13 yet.**
 If you are on macOS with Python 3.13 default:
 1.  **Use Docker (Option 1)** - This is the easiest and guaranteed fix.
 2.  OR Install Python 3.11 (`brew install python@3.11`) and use Option 3 manually.
 
-### Option 1: 🐳 Docker (Recommended)
+### Option 1: Docker (Recommended)
 Run the entire stack in isolated containers. **This avoids all Python version issues.**
 
 ```bash
@@ -99,7 +99,7 @@ docker-compose up --build
 - **Dashboard**: http://localhost:3000
 - **Engine API**: http://localhost:8053
 
-### Option 2: ⚡ Quick Install Script
+### Option 2: Quick Install Script
 Use the provided script to set up everything automatically on your local machine.
 **Requires**: `brew` installed and `python3.10` or `python3.11` available.
 
@@ -108,14 +108,14 @@ chmod +x install.sh
 ./install.sh
 ```
 
-### Option 3: 🔧 Manual Installation
+### Option 3: Manual Installation
 
-#### 📋 Prerequisites
+#### Prerequisites
 - Python 3.9 - 3.11 (Python 3.13 not supported by MediaPipe yet)
 - Node.js 18 or higher (pnpm recommended)
 - Integrated or external webcam
 
-#### 1. ⚙️ Engine Configuration (Backend)
+#### 1. Engine Configuration (Backend)
 Navigate to the engine directory and initialize the environment:
 
 ```bash
@@ -132,7 +132,7 @@ python3 main.py
 ```
 Default endpoint: http://localhost:8053
 
-#### 2. 🖥️ Dashboard Configuration (Frontend)
+#### 2. Dashboard Configuration (Frontend)
 From the root directory, install dependencies and start the UI:
 
 ```bash
@@ -147,7 +147,7 @@ pnpm dev
 ```
 Dashboard address: http://localhost:3000
 
-## 🚀 Usage Guide
+## Usage Guide
 
 1. **Initialize**: Ensure the backend and frontend are running. Open the dashboard in your browser.
 2. **Connectivity**: Verify that Camera, Model, and WebSocket indicators are active.
@@ -158,21 +158,21 @@ Dashboard address: http://localhost:3000
 4. **Retrain**: Click Retrain Model to synchronize the AI classifier with your new data.
 5. **Control**: Toggle Start Detection and use your hand gestures to interact with your system.
 
-## 🏗️ Technical Stack
+## Technical Stack
 
-### 🐍 Backend
+### Backend
 - **FastAPI**: High-performance asynchronous API framework.
 - **MediaPipe**: Google's modular ML framework for computer vision.
 - **Scikit-learn**: Machine learning library for the Random Forest classifier.
 - **OpenCV**: Real-time image processing.
 - **PyAutoGUI**: Cross-platform GUI automation.
 
-### ⚛️ Frontend
+### Frontend
 - **Next.js**: React framework for performance and routing.
 - **Tailwind CSS**: Utility-first styling for the glassmorphism design.
 - **Framer Motion**: Production-ready motion library for animations.
 - **Recharts**: Composable charting library for data visualization.
 - **Lucide React**: Clean and consistent icon library.
 
-## 📜 License
+## License
 This project is licensed under the MIT License.
