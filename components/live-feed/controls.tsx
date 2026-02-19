@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Play, Square, Camera, CameraOff } from 'lucide-react';
+import { Play, Square, Camera, CameraOff, Gauge } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
 import { GlassCard } from '../core/glass-card';
 import { Button } from '@/components/ui/button';
@@ -12,12 +12,19 @@ export function LiveFeedControls() {
   const { state, updateSystemStatus } = useApp();
 
   const [localThreshold, setLocalThreshold] = useState([80]);
+  const [speed, setSpeed] = useState(1.0);
 
   useEffect(() => {
     if (state.systemStatus.confidenceThreshold !== undefined) {
       setLocalThreshold([state.systemStatus.confidenceThreshold]);
     }
   }, [state.systemStatus.confidenceThreshold]);
+
+  useEffect(() => {
+    if (state.systemStatus.speedFactor !== undefined) {
+      setSpeed(state.systemStatus.speedFactor);
+    }
+  }, [state.systemStatus.speedFactor]);
 
   const handleThresholdChange = async (value: number[]) => {
     setLocalThreshold(value);
@@ -34,89 +41,133 @@ export function LiveFeedControls() {
     await updateSystemStatus({ camera: newStatus });
   };
 
+  const handleSpeedChange = (value: number[]) => {
+    const newSpeed = value[0];
+    setSpeed(newSpeed);
+  };
+
+  const handleSpeedCommit = (value: number[]) => {
+    const newSpeed = value[0];
+    updateSystemStatus({ speedFactor: newSpeed });
+  };
+
+  const getSpeedLabel = (val: number) => {
+    if (val < 0.5) return 'Slow';
+    if (val < 1.2) return 'Normal';
+    if (val < 2.0) return 'Fast';
+    return 'Turbo';
+  };
+
   return (
-    <GlassCard className="p-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-      {/* Detection Toggle */}
-      <motion.div
-        className="flex-1"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        <Button
-          onClick={toggleDetection}
-          className={`w-full h-12 justify-between transition-all duration-300 text-white bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10`}
+    <GlassCard className="p-4 flex flex-col gap-4">
+      {/* Row 1: Detection toggle + Camera toggle + Confidence + FPS */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+        {/* Detection Toggle */}
+        <motion.div
+          className="flex-1"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          <span className="flex items-center gap-2 text-white">
-            {state.systemStatus.detectionActive ? (
-              <>
-                <Square className="w-4 h-4 text-white" />
-                Stop Detection
-              </>
-            ) : (
-              <>
-                <Play className="w-4 h-4 text-white" />
-                Start Detection
-              </>
+          <Button
+            onClick={toggleDetection}
+            className={`w-full h-12 justify-between transition-all duration-300 text-white bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10`}
+          >
+            <span className="flex items-center gap-2 text-white">
+              {state.systemStatus.detectionActive ? (
+                <>
+                  <Square className="w-4 h-4 text-white" />
+                  Stop Detection
+                </>
+              ) : (
+                <>
+                  <Play className="w-4 h-4 text-white" />
+                  Start Detection
+                </>
+              )}
+            </span>
+            {state.systemStatus.detectionActive && (
+              <motion.div
+                className="w-2 h-2 rounded-full bg-white"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
             )}
-          </span>
-          {state.systemStatus.detectionActive && (
-            <motion.div
-              className="w-2 h-2 rounded-full bg-white"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+          </Button>
+        </motion.div>
+
+        {/* Camera Toggle */}
+        <motion.div
+          className="flex-1"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <Button
+            onClick={toggleCamera}
+            className={`w-full h-12 justify-center transition-all duration-300 text-white bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10`}
+          >
+            <span className="flex items-center gap-2 text-white">
+              {state.systemStatus.camera === 'on' ? (
+                <>
+                  <Camera className="w-4 h-4 text-white" />
+                  Camera On
+                </>
+              ) : (
+                <>
+                  <CameraOff className="w-4 h-4 text-white" />
+                  Camera Off
+                </>
+              )}
+            </span>
+          </Button>
+        </motion.div>
+
+        { }
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <div className="flex items-center gap-3 w-40 min-w-[200px]">
+            <span className="text-xs text-white whitespace-nowrap min-w-[3.5rem]">
+              Conf: {localThreshold}%
+            </span>
+            <Slider
+              defaultValue={[80]}
+              max={100}
+              min={10}
+              step={5}
+              value={localThreshold}
+              onValueChange={handleThresholdChange}
+              className="w-full flex-1"
             />
-          )}
-        </Button>
-      </motion.div>
-
-      {/* Camera Toggle */}
-      <motion.div
-        className="flex-1"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        <Button
-          onClick={toggleCamera}
-          className={`w-full h-12 justify-center transition-all duration-300 text-white bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10`}
-        >
-          <span className="flex items-center gap-2 text-white">
-            {state.systemStatus.camera === 'on' ? (
-              <>
-                <Camera className="w-4 h-4 text-white" />
-                Camera On
-              </>
-            ) : (
-              <>
-                <CameraOff className="w-4 h-4 text-white" />
-                Camera Off
-              </>
-            )}
-          </span>
-        </Button>
-      </motion.div>
-
-      { }
-      <div className="flex flex-col sm:flex-row items-center gap-4">
-        <div className="flex items-center gap-3 w-40 min-w-[200px]">
-          <span className="text-xs text-white whitespace-nowrap min-w-[3.5rem]">
-            Conf: {localThreshold}%
-          </span>
-          <Slider
-            defaultValue={[80]}
-            max={100}
-            min={10}
-            step={5}
-            value={localThreshold}
-            onValueChange={handleThresholdChange}
-            className="w-full flex-1"
-          />
+          </div>
+          <div className="glass-sm px-4 py-2 rounded-lg flex items-center gap-2 whitespace-nowrap self-end sm:self-auto">
+            <span className="text-xs text-white">FPS:</span>
+            <span className="font-mono text-sm font-semibold text-white">
+              {state.systemStatus.fps}
+            </span>
+          </div>
         </div>
-        <div className="glass-sm px-4 py-2 rounded-lg flex items-center gap-2 whitespace-nowrap self-end sm:self-auto">
-          <span className="text-xs text-white">FPS:</span>
-          <span className="font-mono text-sm font-semibold text-white">
-            {state.systemStatus.fps}
+      </div>
+
+      {/* Row 2: Detection Speed slider */}
+      <div className="flex flex-col items-center gap-3">
+        <div className="flex items-center gap-2">
+          <div className="p-2 rounded-full bg-yellow-500/20 text-yellow-500">
+            <Gauge className="w-5 h-5" />
+          </div>
+          <label className="text-sm font-medium text-foreground">Detection Speed</label>
+          <span className="text-xs font-mono text-yellow-500 bg-yellow-500/10 px-2 py-0.5 rounded">
+            {speed.toFixed(1)}x ({getSpeedLabel(speed)})
           </span>
         </div>
+
+        <Slider
+          defaultValue={[1.0]}
+          value={[speed]}
+          min={0.1}
+          max={3.0}
+          step={0.1}
+          onValueChange={handleSpeedChange}
+          onValueCommit={handleSpeedCommit}
+          className="py-2 w-48"
+        />
       </div>
     </GlassCard>
   );
