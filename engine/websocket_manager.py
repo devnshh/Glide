@@ -26,7 +26,7 @@ class ConnectionManager:
             except Exception as e:
                 print(f"Error sending to websocket: {e}")
 
-    async def send_status(self, camera_status="on", model_status="ready", detection_active=True, fps=0, total_detections=0, actions_executed=0, confidence_threshold=0.75, speed_factor=1.0, cursor_mode=False):
+    async def send_status(self, camera_status="on", model_status="ready", detection_active=True, fps=0, total_detections=0, actions_executed=0, confidence_threshold=0.80, speed_factor=1.0, cursor_mode=False):
         msg = {
             "type": "status",
             "data": {

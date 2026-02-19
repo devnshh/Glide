@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useApp } from '@/lib/app-context';
 import { MagicBentoCard } from '../ui/magic-bento';
-import { Zap, Gauge } from 'lucide-react';
+import { Gauge } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
 export function SpeedControl() {
@@ -35,19 +35,15 @@ export function SpeedControl() {
     };
 
     return (
-        <MagicBentoCard className="p-4 flex flex-col gap-3" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
-            <div className="flex items-center gap-3">
+        <MagicBentoCard className="p-4 flex flex-col items-center gap-3" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
+            <div className="flex items-center gap-2">
                 <div className="p-2 rounded-full bg-yellow-500/20 text-yellow-500">
                     <Gauge className="w-5 h-5" />
                 </div>
-                <div className="flex flex-1 justify-between items-center">
-                    <label className="text-sm font-medium text-foreground">
-                        Detection Speed
-                    </label>
-                    <span className="text-xs font-mono text-yellow-500 bg-yellow-500/10 px-2 py-0.5 rounded">
-                        {speed.toFixed(1)}x ({getSpeedLabel(speed)})
-                    </span>
-                </div>
+                <label className="text-sm font-medium text-foreground">Detection Speed</label>
+                <span className="text-xs font-mono text-yellow-500 bg-yellow-500/10 px-2 py-0.5 rounded">
+                    {speed.toFixed(1)}x ({getSpeedLabel(speed)})
+                </span>
             </div>
 
             <Slider
@@ -58,7 +54,7 @@ export function SpeedControl() {
                 step={0.1}
                 onValueChange={handleSpeedChange}
                 onValueCommit={handleSpeedCommit}
-                className="py-2 w-full"
+                className="py-2 w-48"
             />
         </MagicBentoCard>
     );

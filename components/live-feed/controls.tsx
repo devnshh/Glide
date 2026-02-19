@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 export function LiveFeedControls() {
   const { state, updateSystemStatus } = useApp();
 
-  const [localThreshold, setLocalThreshold] = useState([75]);
+  const [localThreshold, setLocalThreshold] = useState([80]);
 
   useEffect(() => {
     if (state.systemStatus.confidenceThreshold !== undefined) {
@@ -102,7 +102,7 @@ export function LiveFeedControls() {
             Conf: {localThreshold}%
           </span>
           <Slider
-            defaultValue={[75]}
+            defaultValue={[80]}
             max={100}
             min={10}
             step={5}

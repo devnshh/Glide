@@ -37,14 +37,14 @@ export default function DashboardPage() {
   return (
     <AppShell>
       <motion.div
-        className="px-4 sm:px-6 py-8 max-w-7xl mx-auto overflow-hidden"
+        className="px-4 sm:px-6 py-4 max-w-7xl mx-auto overflow-hidden"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         { }
-        <motion.div variants={itemVariants} className="mb-6 -ml-[3px]">
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+        <motion.div variants={itemVariants} className="mb-3 -ml-[3px]">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
             Dashboard
           </h1>
         </motion.div>
@@ -55,11 +55,11 @@ export default function DashboardPage() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4"
           >
             <motion.div variants={itemVariants}>
               <StatCard
-                icon={<Wand2 className="w-6 h-6" />}
+                icon={<Wand2 className="w-5 h-5" />}
                 label="Total Gestures"
                 value={state.gestures.length}
                 trend={{ direction: 'up', value: 12 }}
@@ -67,7 +67,7 @@ export default function DashboardPage() {
             </motion.div>
             <motion.div variants={itemVariants}>
               <StatCard
-                icon={<Activity className="w-6 h-6" />}
+                icon={<Activity className="w-5 h-5" />}
                 label="Detections (24h)"
                 value="324"
                 trend={{ direction: 'up', value: 8 }}
@@ -75,7 +75,7 @@ export default function DashboardPage() {
             </motion.div>
             <motion.div variants={itemVariants}>
               <StatCard
-                icon={<TrendingUp className="w-6 h-6" />}
+                icon={<TrendingUp className="w-5 h-5" />}
                 label="Accuracy"
                 value="94.2"
                 suffix="%"
@@ -84,7 +84,7 @@ export default function DashboardPage() {
             </motion.div>
             <motion.div variants={itemVariants}>
               <StatCard
-                icon={<Zap className="w-6 h-6" />}
+                icon={<Zap className="w-5 h-5" />}
                 label="Model Status"
                 value={state.systemStatus.model === 'ready' ? 'Ready' : 'Loading'}
                 trend={undefined}
@@ -99,7 +99,7 @@ export default function DashboardPage() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4"
           >
             {/* Activity Feed */}
             <motion.div variants={itemVariants} className="lg:col-span-2">
@@ -113,7 +113,7 @@ export default function DashboardPage() {
           </motion.div>
 
           {/* System Status & Controls */}
-          <motion.div variants={itemVariants} className="space-y-4">
+          <motion.div variants={itemVariants} className="space-y-3">
             <SystemHealthBar />
             <SpeedControl />
           </motion.div>

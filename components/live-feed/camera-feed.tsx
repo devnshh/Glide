@@ -41,7 +41,7 @@ export function CameraFeed({ className }: CameraFeedProps) {
   };
 
   return (
-    <GlassCard className={cn("relative p-0 h-full min-h-[400px] flex flex-col items-center justify-start overflow-hidden bg-black", className)}>
+    <GlassCard className={cn("relative p-0 h-full min-h-[400px] flex flex-col items-center justify-center overflow-hidden bg-black", className)}>
       <AnimatePresence mode="wait">
         {isCameraOn && !error ? (
           <motion.div
@@ -72,7 +72,7 @@ export function CameraFeed({ className }: CameraFeedProps) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="flex flex-col items-center gap-4 text-muted-foreground p-8"
+            className="flex flex-col items-center justify-center gap-4 text-muted-foreground p-8 h-full w-full"
           >
             <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center relative overflow-hidden">
               <motion.div
@@ -84,11 +84,8 @@ export function CameraFeed({ className }: CameraFeedProps) {
             </div>
             <div className="text-center space-y-2">
               <p className="font-semibold text-lg text-foreground">
-                {error ? "Camera Unavailable" : "Camera Initializing..."}
+                {error ? "Camera Unavailable" : "Camera is Off"}
               </p>
-              {!error && !isCameraOn && (
-                <p className="font-semibold text-lg text-foreground">Camera is Off</p>
-              )}
               {error && (
                 <p className="text-sm">Ensure the backend server is running.</p>
               )}

@@ -26,6 +26,7 @@ export const initialState: AppState = {
     fps: 0,
     wsConnected: false,
     cursorMode: false,
+    confidenceThreshold: 80,
   },
   trainingState: {
     inProgress: false,

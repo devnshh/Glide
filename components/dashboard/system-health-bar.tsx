@@ -40,7 +40,7 @@ export function SystemHealthBar() {
 
   return (
     <MagicBentoCard className="p-4" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         {healthItems.map((item, index) => {
           const Icon = item.icon;
           const statusColor = {
@@ -58,7 +58,7 @@ export function SystemHealthBar() {
           return (
             <motion.div
               key={item.label}
-              className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-smooth"
+              className="flex items-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-smooth"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}

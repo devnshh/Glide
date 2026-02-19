@@ -52,8 +52,7 @@ class SystemState:
         self.training_sample_target = 0
         self.last_capture_time = 0
 
-        self.confidence_threshold = 0.75
-        self.confidence_threshold = 0.75
+        self.confidence_threshold = 0.80
         self.speed_factor = 1.0
         self.latest_frame = None
         self.action_lock = threading.Lock()
@@ -88,7 +87,7 @@ class SystemState:
             print("Gestures saved to gestures.json")
         except Exception as e:
             print(f"Error saving gestures: {e}")
-        self.confidence_threshold = 0.75
+        self.confidence_threshold = 0.80
         self.latest_frame = None
 
 state = SystemState()

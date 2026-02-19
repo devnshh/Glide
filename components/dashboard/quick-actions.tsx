@@ -10,7 +10,7 @@ import { Slider } from '@/components/ui/slider';
 
 export function QuickActions() {
   const { state, dispatch } = useApp();
-  const [localThreshold, setLocalThreshold] = useState([75]);
+  const [localThreshold, setLocalThreshold] = useState([80]);
 
   useEffect(() => {
     if (state.systemStatus.confidenceThreshold !== undefined) {
@@ -72,7 +72,7 @@ export function QuickActions() {
   };
 
   return (
-    <MagicBentoCard className="p-6 flex flex-col gap-4" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
+    <MagicBentoCard className="p-4 flex flex-col gap-3" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
       <h3 className="font-semibold text-foreground">Quick Actions</h3>
 
       { }
@@ -93,10 +93,10 @@ export function QuickActions() {
         animate="visible"
       >
         { }
-        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button
             onClick={toggleDetection}
-            className={`w-full justify-between h-12 transition-all duration-300 text-white ${state.systemStatus.detectionActive
+            className={`w-full justify-between h-9 transition-all duration-300 text-white ${state.systemStatus.detectionActive
               ? 'bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10'
               : 'bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-sm'
               }`}
@@ -125,13 +125,13 @@ export function QuickActions() {
         </motion.div>
 
         { }
-        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button
             onClick={() =>
               dispatch({ type: 'OPEN_MODAL', payload: { type: 'retrain' } })
             }
             disabled={state.trainingState.inProgress}
-            className="w-full justify-between h-12 bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10 disabled:opacity-50 text-white"
+            className="w-full justify-between h-9 bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10 disabled:opacity-50 text-white"
           >
             <span className="flex items-center gap-2 text-white">
               <RotateCcw className="w-4 h-4 text-white" />
@@ -143,7 +143,7 @@ export function QuickActions() {
         </motion.div>
 
         { }
-        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button
             onClick={() =>
               dispatch({
@@ -151,7 +151,7 @@ export function QuickActions() {
                 payload: { type: 'addGesture' },
               })
             }
-            className="w-full justify-between h-12 bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10 text-white"
+            className="w-full justify-between h-9 bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10 text-white"
           >
             <span className="flex items-center gap-2 text-white">
               <Plus className="w-4 h-4 text-white" />
@@ -161,10 +161,10 @@ export function QuickActions() {
         </motion.div>
 
         { }
-        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button
             onClick={toggleCamera}
-            className={`w-full justify-between h-12 transition-all duration-300 text-white ${state.systemStatus.camera === 'on'
+            className={`w-full justify-between h-9 transition-all duration-300 text-white ${state.systemStatus.camera === 'on'
               ? 'bg-gradient-to-r from-[#301088] to-[#5723E7] hover:brightness-110 shadow-lg shadow-[#5723E7]/20 border border-white/10'
               : 'bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-sm'
               }`}
@@ -185,7 +185,7 @@ export function QuickActions() {
               Conf: {localThreshold}%
             </span>
             <Slider
-              defaultValue={[75]}
+              defaultValue={[80]}
               max={100}
               min={10}
               step={5}

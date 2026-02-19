@@ -31,17 +31,17 @@ export default function LiveFeedPage() {
   return (
     <AppShell>
       <motion.div
-        className="px-4 sm:px-6 py-8 max-w-7xl mx-auto h-full flex flex-col gap-6"
+        className="px-4 sm:px-6 py-4 max-w-7xl mx-auto h-full flex flex-col gap-4"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         { }
         <motion.div variants={itemVariants} className="-ml-[3px]">
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-1">
             Live Feed
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
+          <p className="text-xs sm:text-sm text-muted-foreground">
             Real-time gesture detection and recognition
           </p>
         </motion.div>
@@ -50,7 +50,7 @@ export default function LiveFeedPage() {
         <MagicBentoGrid>
           <motion.div
             variants={itemVariants}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[680px] items-stretch overflow-hidden"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[500px] items-stretch overflow-hidden"
           >
             {/* Camera Feed Section */}
             <div className="lg:col-span-2 h-full">
@@ -70,7 +70,7 @@ export default function LiveFeedPage() {
           </motion.div>
 
           { }
-          <motion.div variants={itemVariants} className="mt-6">
+          <motion.div variants={itemVariants} className="mt-4">
             <MagicBentoCard className="p-0 overflow-hidden" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
               <LiveFeedControls />
             </MagicBentoCard>
