@@ -13,14 +13,14 @@ def execute_action(action_name):
     """Executes the mapped action safely using the platform-specific controller."""
     try:
 
-        if action_name == "previous_track":
+        if action_name == "prev_track":
             desktop_controller.prev_track()
         elif action_name == "next_track":
             desktop_controller.next_track()
         elif action_name == "play_pause":
             desktop_controller.play_pause()
 
-        elif action_name == "volume_mute":
+        elif action_name == "mute":
             desktop_controller.mute()
         elif action_name == "volume_up":
             desktop_controller.volume_up()

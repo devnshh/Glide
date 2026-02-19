@@ -14,6 +14,33 @@ class DesktopController:
         except Exception as e:
             print(f"osascript error: {e}")
 
+    def _mac_media_key(self, key_type):
+        """Send a media key event using the NX system event layer (AppKit + Quartz).
+        This is identical to how physical media keys work on macOS — routes to any
+        active media player regardless of which app is in the foreground.
+        NX_KEYTYPE_MUTE=7, NX_KEYTYPE_PLAY=16, NX_KEYTYPE_NEXT=17, NX_KEYTYPE_PREVIOUS=18
+        Both AppKit and Quartz are guaranteed present because pyautogui requires them on macOS.
+        """
+        try:
+            from AppKit import NSEvent
+            import Quartz
+            for flags, updown in ((0xa00, 0xa), (0xb00, 0xb)):
+                data1 = (key_type << 16) | (updown << 8)
+                ev = NSEvent.otherEventWithType_location_modifierFlags_timestamp_windowNumber_context_subtype_data1_data2_(
+                    14,      # NSSystemDefined
+                    (0, 0),  # location
+                    flags,   # modifierFlags (0xa00=keydown, 0xb00=keyup)
+                    0,       # timestamp
+                    0,       # windowNumber
+                    None,    # context
+                    8,       # subtype
+                    data1,   # data1 encodes key type + up/down
+                    -1,      # data2
+                )
+                Quartz.CGEventPost(Quartz.kCGHIDEventTap, ev.CGEvent())
+        except Exception as e:
+            print(f"DesktopController: media key error: {e}")
+
     def screenshot(self):
         print("DesktopController: Screenshot")
         if self._system == "Darwin":
@@ -23,7 +50,10 @@ class DesktopController:
 
     def switch_tab(self):
         print("DesktopController: Switch Tab")
-        pyautogui.hotkey("ctrl", "tab")
+        if self._system == "Darwin":
+            pyautogui.hotkey("ctrl", "tab")
+        else:
+            pyautogui.hotkey("alt", "tab")
 
     def volume_up(self):
         print("DesktopController: Volume Up")
@@ -91,21 +121,21 @@ class DesktopController:
     def play_pause(self):
         print("DesktopController: Play/Pause")
         if self._system == "Darwin":
-            self._osascript('tell application "System Events" to key code 100')
+            self._mac_media_key(16)  # NX_KEYTYPE_PLAY = 16
         else:
             pyautogui.press("playpause")
 
     def next_track(self):
         print("DesktopController: Next Track")
         if self._system == "Darwin":
-            self._osascript('tell application "System Events" to key code 101')
+            self._mac_media_key(17)  # NX_KEYTYPE_NEXT = 17
         else:
             pyautogui.press("nexttrack")
 
     def prev_track(self):
         print("DesktopController: Prev Track")
         if self._system == "Darwin":
-            self._osascript('tell application "System Events" to key code 98')
+            self._mac_media_key(18)  # NX_KEYTYPE_PREVIOUS = 18
         else:
             pyautogui.press("prevtrack")
 

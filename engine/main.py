@@ -62,6 +62,7 @@ class SystemState:
         self.latest_frame_raw = None
         self.latest_landmarks = None  # Shared landmark data from camera loop for detection loop
         self.draw_lock = threading.Lock()
+        self.last_confirmed_action = None  # Tracks previous frame's action for rising-edge detection
 
     def load_gestures(self):
         import json
@@ -261,6 +262,13 @@ def detection_loop():
                          "None": 0.0
                       }
 
+                      # Actions that should fire exactly once per gesture activation.
+                      # They use rising-edge detection instead of a repeating cooldown.
+                      ONE_SHOT_ACTIONS = {
+                          "screenshot",
+                          "play_pause", "next_track", "prev_track", "mute",
+                      }
+
                       # --- Helper for executing actions ---
                       def execute_gesture_action_logic(act_name):
                           if act_name == "toggle_cursor":
@@ -284,7 +292,16 @@ def detection_loop():
                                   })
                              return
 
-                          # Normal Action — cooldown is scaled by speed_factor so higher
+                          # One-shot actions: fire immediately on the rising edge only.
+                          # If the same gesture is still held from last frame, do nothing.
+                          if act_name in ONE_SHOT_ACTIONS:
+                              if act_name != state.last_confirmed_action:
+                                  print(f"Executing: {act_name} for {gesture_name}")
+                                  execute_action(act_name)
+                                  state.last_action_time[act_name] = current_time
+                              return
+
+                          # Continuous actions — cooldown is scaled by speed_factor so higher
                           # speed means shorter cooldowns and faster gesture execution.
                           last_time = state.last_action_time.get(act_name, 0)
                           base_cooldown = ACTION_COOLDOWNS.get(act_name, 0.5)
@@ -311,6 +328,14 @@ def detection_loop():
                               if action_name and action_name != "toggle_cursor":
                                   execute_gesture_action_logic(action_name)
                       
+                      # --- Rising-edge tracking ---
+                      # Update last_confirmed_action so one-shot actions know whether
+                      # the gesture is being held or has just appeared.
+                      if gesture_name and confidence_score > state.confidence_threshold and action_name:
+                          state.last_confirmed_action = action_name
+                      else:
+                          state.last_confirmed_action = None
+
                       # --- Notifications ---
                       # Only notify if confidence is ABOVE threshold
                       should_notify = False

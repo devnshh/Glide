@@ -33,5 +33,19 @@
     "emoji": "\ud83d\udc4b",
     "action": "volume_up",
     "sampleCount": 30
+  },
+  {
+    "id": "three",
+    "name": "Three",
+    "emoji": "\ud83d\udc4b",
+    "action": "play_pause",
+    "sampleCount": 30
+  },
+  {
+    "id": "ggs",
+    "name": "ggs",
+    "emoji": "\ud83d\udc46",
+    "action": "mute",
+    "sampleCount": 30
   }
 ]
