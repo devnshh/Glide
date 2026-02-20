@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { VideoOff, Camera, Loader2 } from 'lucide-react';
 import { GlassCard } from '../core/glass-card';
 import { cn } from '@/lib/utils';
 import { useApp } from '@/lib/app-context';
+import { API_URL } from '@/lib/config';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface CameraFeedProps {
@@ -13,25 +14,74 @@ export function CameraFeed({ className }: CameraFeedProps) {
   const { state } = useApp();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [timestamp, setTimestamp] = useState(0);
+  const [feedUrl, setFeedUrl] = useState<string | null>(null);
   const isCameraOn = state.systemStatus.camera === 'on';
-
-  const feedUrl = timestamp > 0 ? `http://localhost:8053/video_feed?t=${timestamp}` : null;
+  const mountIdRef = useRef(0);
 
   useEffect(() => {
     if (isCameraOn) {
+
+      mountIdRef.current += 1;
+      const currentMount = mountIdRef.current;
+
       setLoading(true);
       setError(false);
+      setFeedUrl(null);
+
       const reconnectTimer = setTimeout(() => {
-        setTimestamp(Date.now());
-      }, 400);
-      const loadTimer = setTimeout(() => setLoading(false), 3500);
+
+        if (mountIdRef.current === currentMount) {
+          setFeedUrl(`${API_URL}/video_feed?t=${Date.now()}`);
+        }
+      }, 500);
+
+      const loadTimer = setTimeout(() => {
+        if (mountIdRef.current === currentMount) {
+          setLoading(false);
+        }
+      }, 3500);
+
       return () => {
         clearTimeout(reconnectTimer);
         clearTimeout(loadTimer);
+
+        setFeedUrl(null);
       };
+    } else {
+      setFeedUrl(null);
+      setLoading(false);
     }
   }, [isCameraOn]);
+
+  useEffect(() => {
+    if (isCameraOn) {
+      mountIdRef.current += 1;
+      const currentMount = mountIdRef.current;
+
+      setLoading(true);
+      setError(false);
+      setFeedUrl(null);
+
+      const timer = setTimeout(() => {
+        if (mountIdRef.current === currentMount) {
+          setFeedUrl(`${API_URL}/video_feed?t=${Date.now()}`);
+        }
+      }, 500);
+
+      const loadTimer = setTimeout(() => {
+        if (mountIdRef.current === currentMount) {
+          setLoading(false);
+        }
+      }, 3500);
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(loadTimer);
+        setFeedUrl(null);
+      };
+    }
+
+  }, []); 
 
   const handleImageLoad = () => {
     setLoading(false);
@@ -59,7 +109,7 @@ export function CameraFeed({ className }: CameraFeedProps) {
           >
             {feedUrl && (
               <img
-                key={timestamp}
+                key={feedUrl}
                 src={feedUrl}
                 alt="Live Camera Feed"
                 className="w-full h-full object-cover"

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { useApp } from './app-context';
 import { WebSocketMessage, DetectionMessage, StatusMessage } from './types';
+import { API_URL, WS_URL } from './config';
 
 interface WebSocketContextType {
   isConnected: boolean;
@@ -24,8 +25,8 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const wsUrl = 'ws://localhost:8053/ws';
-    const apiUrl = 'http://localhost:8053';
+    const wsUrl = WS_URL;
+    const apiUrl = API_URL;
     let socket: WebSocket;
     let reconnectTimer: NodeJS.Timeout;
 

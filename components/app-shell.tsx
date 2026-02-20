@@ -26,7 +26,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex flex-col h-screen bg-transparent text-foreground">
       { }
       <header className="glass-sm border-b sticky top-0 z-50">
-        <div className="px-6 py-4 flex items-center justify-between">
+        <div className="px-6 py-4 flex items-center justify-between pl-20">
           { }
           <div className="flex items-center gap-3">
             <motion.div

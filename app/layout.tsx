@@ -44,12 +44,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-transparent text-foreground min-h-screen`}>
-        {/* Silk Background */}
+        {}
         <div className="fixed inset-0 -z-10 h-full w-full">
           <Silk
             speed={2.8}
             scale={0.6}
-            color="#301088ff" // RGB(87,35,231)
+            color="#301088ff" 
             noiseIntensity={2.5}
             rotation={0}
           />

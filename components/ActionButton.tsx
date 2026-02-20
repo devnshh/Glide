@@ -49,6 +49,9 @@ export const ActionButton = React.forwardRef<
       fullWidth = false,
       loading = false,
       disabled = false,
+      onDrag: _onDrag,
+      onDragStart: _onDragStart,
+      onDragEnd: _onDragEnd,
       ...props
     },
     ref
@@ -66,7 +69,7 @@ export const ActionButton = React.forwardRef<
           ${sizeConfig[size]}
           ${fullWidth ? 'w-full' : ''}
         `}
-        {...props}
+        {...(props as React.ComponentProps<typeof motion.button>)}
       >
         {loading && (
           <motion.svg

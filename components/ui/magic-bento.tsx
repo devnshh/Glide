@@ -335,7 +335,6 @@ const GlobalSpotlight: React.FC<{
 
                 isInsideSection.current = mouseInside || false;
 
-                // Select all cards within the grid, assuming they have the class 'card'
                 const cards = gridRef.current.querySelectorAll('.card');
 
                 if (!mouseInside) {
@@ -470,7 +469,7 @@ export const MagicBentoGrid: React.FC<MagicBentoGridProps> = ({
             --purple-glow: rgba(87, 35, 231, 0.2);
             --purple-border: rgba(87, 35, 231, 0.8);
           }
-          
+
           .card--border-glow::after {
             content: '';
             position: absolute;
@@ -490,15 +489,15 @@ export const MagicBentoGrid: React.FC<MagicBentoGridProps> = ({
             transition: opacity 0.3s ease;
             z-index: 1;
           }
-          
+
           .card--border-glow:hover::after {
             opacity: 1;
           }
-          
+
           .card--border-glow:hover {
             box-shadow: 0 4px 20px rgba(46, 24, 78, 0.4), 0 0 30px rgba(${glowColor}, 0.2);
           }
-          
+
           .particle::before {
             content: '';
             position: absolute;
@@ -529,8 +528,6 @@ export const MagicBentoGrid: React.FC<MagicBentoGridProps> = ({
 
 import { motion } from 'framer-motion';
 
-// ... (keep previous code until MagicBentoCard definition)
-
 interface MagicBentoCardProps extends ParticleCardProps {
     enableHoverAction?: boolean;
 }
@@ -538,9 +535,6 @@ interface MagicBentoCardProps extends ParticleCardProps {
 export const MagicBentoCard: React.FC<MagicBentoCardProps> = (props) => {
     const { className, style, enableHoverAction = true, ...rest } = props;
 
-    // Base classes from reference
-    // Changed to border-transparent to ensure no "white border" artifact appears
-    // The glow comes from card--border-glow::after which overlays the border area
     const baseClasses = "card flex flex-col relative w-full h-full p-5 rounded-[20px] border border-solid border-transparent font-light overflow-hidden transition-all duration-200 ease-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] card--border-glow bg-[#1a1035]";
 
     const defaultStyle = {

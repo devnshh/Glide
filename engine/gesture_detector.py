@@ -47,7 +47,6 @@ class GestureDetector:
         Estimates the number of extended fingers based on landmarks.
         landmarks: Normalized landmark list [x1, y1, z1, x2, y2, z2, ...]
         """
-        # Unpack landmarks (21 points, 3 coords each)
         points = []
         for i in range(0, len(landmarks), 3):
             points.append({'x': landmarks[i], 'y': landmarks[i+1]})
@@ -55,33 +54,19 @@ class GestureDetector:
         if not points:
             return 0
 
-        # Finger tips and PIP joints (for index, middle, ring, pinky)
-        # Index: 8, PIP: 6. Middle: 12, PIP: 10. Ring: 16, PIP: 14. Pinky: 20, PIP: 18.
-        # Check if tip is higher (smaller y) than PIP joint for upright hand
         fingers = []
         
-        # Determine if hand is upright or inverted based on wrist vs middle finger MCP
-        # If wrist (0) is below middle MCP (9), hand is upright-ish.
-        # y increases downwards in image coords.
         is_upright = points[0]['y'] > points[9]['y']
         
         tips = [8, 12, 16, 20]
         pips = [6, 10, 14, 18]
 
-        # 4 fingers
         for tip, pip in zip(tips, pips):
             if is_upright:
                 fingers.append(points[tip]['y'] < points[pip]['y'])
             else:
                 fingers.append(points[tip]['y'] > points[pip]['y'])
 
-        # Thumb logic (horizontal check usually)
-        # Tip: 4, IP: 3, MCP: 2. 
-        # Check x-distance relative to Index MCP (5) or Pinky MCP (17).
-        # Simple heuristic: If thumb tip is further to the side than IP joint.
-        # Left/right hand agnostic check? Check relative to palm center (0 or 9).
-        # Distance from wrist (0) to Tip (4) vs Wrist (0) to IP (3).
-        # Extended thumb tip is usually further from wrist/palm center.
         
         def dist(p1, p2):
             return ((p1['x'] - p2['x'])**2 + (p1['y'] - p2['y'])**2)**0.5

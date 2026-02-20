@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, RotateCcw, Check, AlertTriangle, Loader2 } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
+import { API_URL, WS_URL } from '@/lib/config';
 import { Button } from '@/components/ui/button';
 import { ConfidenceRing } from '../core/confidence-ring';
 
@@ -35,14 +36,14 @@ export function RetrainStatusModal() {
         });
 
         try {
-            await fetch('http://localhost:8053/train/model', { method: 'POST' });
+            await fetch(`${API_URL}/train/model`, { method: 'POST' });
         } catch (e) {
             console.error("Retrain failed", e);
             setPhase('error');
             return;
         }
 
-        const ws = new WebSocket('ws://localhost:8053/ws');
+        const ws = new WebSocket(WS_URL);
 
         ws.onmessage = (event) => {
             try {
@@ -72,7 +73,7 @@ export function RetrainStatusModal() {
             <motion.div
                 className="fixed inset-0 z-50 flex items-center justify-center p-4"
             >
-                {}
+                { }
                 <motion.div
                     className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                     initial={{ opacity: 0 }}
@@ -81,7 +82,7 @@ export function RetrainStatusModal() {
                     onClick={phase !== 'training' ? handleClose : undefined}
                 />
 
-                {}
+                { }
                 <motion.div
                     className="relative w-full max-w-sm glass-card border border-white/15 rounded-2xl overflow-hidden"
                     initial={{ scale: 0.9, opacity: 0 }}
@@ -89,7 +90,7 @@ export function RetrainStatusModal() {
                     exit={{ scale: 0.9, opacity: 0 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 >
-                    {}
+                    { }
                     <div className="flex items-center justify-between p-6 border-b border-white/10">
                         <div>
                             <h2 className="text-xl font-semibold text-foreground">Retrain Model</h2>
@@ -112,10 +113,10 @@ export function RetrainStatusModal() {
                         )}
                     </div>
 
-                    {}
+                    { }
                     <div className="p-6 flex flex-col items-center gap-6">
                         <AnimatePresence mode="wait">
-                            {}
+                            { }
                             {phase === 'idle' && (
                                 <motion.div
                                     key="idle"
@@ -145,7 +146,7 @@ export function RetrainStatusModal() {
                                 </motion.div>
                             )}
 
-                            {}
+                            { }
                             {phase === 'training' && (
                                 <motion.div
                                     key="training"
@@ -168,7 +169,7 @@ export function RetrainStatusModal() {
                                 </motion.div>
                             )}
 
-                            {}
+                            { }
                             {phase === 'success' && (
                                 <motion.div
                                     key="success"
@@ -202,7 +203,7 @@ export function RetrainStatusModal() {
                                 </motion.div>
                             )}
 
-                            {}
+                            { }
                             {phase === 'error' && (
                                 <motion.div
                                     key="error"

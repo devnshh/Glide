@@ -60,9 +60,9 @@ export function LiveFeedControls() {
 
   return (
     <GlassCard className="p-4 flex flex-col gap-4">
-      {/* Row 1: Detection toggle + Camera toggle + Confidence + FPS */}
+      {}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-        {/* Detection Toggle */}
+        {}
         <motion.div
           className="flex-1"
           whileHover={{ scale: 1.02 }}
@@ -95,7 +95,7 @@ export function LiveFeedControls() {
           </Button>
         </motion.div>
 
-        {/* Camera Toggle */}
+        {}
         <motion.div
           className="flex-1"
           whileHover={{ scale: 1.02 }}
@@ -146,7 +146,7 @@ export function LiveFeedControls() {
         </div>
       </div>
 
-      {/* Row 2: Detection Speed slider */}
+      {}
       <div className="flex flex-col items-center gap-3">
         <div className="flex items-center gap-2">
           <div className="p-2 rounded-full bg-yellow-500/20 text-yellow-500">

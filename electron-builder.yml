@@ -1,0 +1,57 @@
+appId: com.glide.app
+productName: Glide
+copyright: Copyright © 2025 Glide
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - electron/**/*
+  - "!node_modules"
+  - "!engine"
+  - "!engine-dist"
+  - "!app"
+  - "!components"
+  - "!lib"
+  - "!hooks"
+  - "!styles"
+  - "!public"
+  - "!.next"
+  - "!.git"
+  - "!out"
+
+extraResources:
+  - from: engine-dist/glide
+    to: engine-dist/glide
+    filter:
+      - "**/*"
+  - from: out
+    to: out
+    filter:
+      - "**/*"
+  - from: build/logo.jpeg
+    to: logo.jpeg
+
+mac:
+  category: public.app-category.utilities
+  icon: build/icon.icns
+  target:
+    - dmg
+  hardenedRuntime: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    NSCameraUsageDescription: "Glide needs camera access for gesture recognition."
+    NSAccessibilityUsageDescription: "Glide needs accessibility access to control your mouse and keyboard with gestures."
+    NSAppleEventsUsageDescription: "Glide needs to send Apple Events to control system volume, brightness, and media playback."
+
+dmg:
+  title: Glide
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications

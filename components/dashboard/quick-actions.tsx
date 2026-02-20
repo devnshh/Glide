@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Square, RotateCcw, Plus, Camera } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
+import { API_URL } from '@/lib/config';
 import { MagicBentoCard } from '../ui/magic-bento';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -21,7 +22,7 @@ export function QuickActions() {
   const handleThresholdChange = async (value: number[]) => {
     setLocalThreshold(value);
     try {
-      await fetch('http://localhost:8053/system/status', {
+      await fetch(`${API_URL}/system/status`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ confidenceThreshold: value[0] })
@@ -34,7 +35,7 @@ export function QuickActions() {
   const toggleDetection = () => {
 
     const newStatus = !state.systemStatus.detectionActive;
-    fetch('http://localhost:8053/system/status', {
+    fetch(`${API_URL}/system/status`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ detectionActive: newStatus })
@@ -50,7 +51,7 @@ export function QuickActions() {
 
   const toggleCamera = () => {
     const newStatus = state.systemStatus.camera === 'on' ? 'off' : 'on';
-    fetch('http://localhost:8053/system/status', {
+    fetch(`${API_URL}/system/status`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ camera: newStatus })

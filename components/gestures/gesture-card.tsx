@@ -26,7 +26,7 @@ export function GestureCard({
       className="h-full"
     >
       <MagicBentoCard className="p-6 h-full flex flex-col gap-4 group">
-        {/* Header */}
+        {}
         <div className="flex items-start justify-between">
           <div className="text-4xl">{gesture.emoji}</div>
           <motion.div
@@ -56,21 +56,21 @@ export function GestureCard({
           </motion.div>
         </div>
 
-        {/* Content */}
+        {}
         <div className="flex-1">
           <h3 className="font-semibold text-foreground mb-1">
             {gesture.name}
           </h3>
           <p className="text-sm text-muted-foreground mb-3">{gesture.action}</p>
 
-          {/* Action Badge */}
+          {}
           <div className="flex items-center gap-2 mb-3">
             <div className="text-xs bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded-full font-mono">
               {gesture.sampleCount} samples
             </div>
           </div>
 
-          {/* Confidence Bar */}
+          {}
           {gesture.confidence !== undefined && (
             <div className="space-y-1">
               <div className="flex justify-between items-center text-xs">

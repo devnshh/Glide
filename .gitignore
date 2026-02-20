@@ -49,3 +49,8 @@ Desktop.ini
 output/
 temp/
 tmp/
+
+# Electron / PyInstaller build outputs
+out/
+engine-dist/
+build/

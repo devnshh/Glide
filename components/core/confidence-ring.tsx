@@ -17,10 +17,10 @@ export function ConfidenceRing({
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
 
-  let color = '#5723E7'; // Default to Silk theme color
-  if (value >= 75) color = '#5723E7'; // High confidence - Silk Purple
-  else if (value >= 50) color = '#7c3aed'; // Medium - Violet
-  else if (value >= 25) color = '#8b5cf6'; // Low - Lighter Violet
+  let color = '#5723E7'; 
+  if (value >= 75) color = '#5723E7'; 
+  else if (value >= 50) color = '#7c3aed'; 
+  else if (value >= 25) color = '#8b5cf6'; 
 
   return (
     <div className="flex flex-col items-center gap-2">

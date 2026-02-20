@@ -2,11 +2,14 @@
   "name": "glide",
   "version": "0.1.0",
   "private": true,
+  "main": "electron/main.js",
   "scripts": {
     "dev": "./node_modules/.bin/next dev --turbo",
-    "build": "next build",
+    "build": "./node_modules/.bin/next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "electron:dev": "npm run build && electron .",
+    "dist": "npm run build && electron-builder --mac"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -69,6 +72,8 @@
     "@types/node": "^22",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
+    "electron": "^40.6.0",
+    "electron-builder": "^26.8.1",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
     "typescript": "5.7.3"

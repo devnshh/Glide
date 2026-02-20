@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { AlertCircle, Trash2 } from 'lucide-react'
 import { useApp } from '@/lib/app-context'
+import { API_URL } from '@/lib/config'
 
 export function DeleteGestureModal() {
   const { state, dispatch } = useApp()
@@ -17,7 +18,7 @@ export function DeleteGestureModal() {
   const handleConfirm = async () => {
     if (gestureId) {
       try {
-        await fetch(`http://localhost:8053/gestures/${gestureId}`, {
+        await fetch(`${API_URL}/gestures/${gestureId}`, {
           method: 'DELETE',
         });
         dispatch({ type: 'DELETE_GESTURE', payload: gestureId });
@@ -32,7 +33,7 @@ export function DeleteGestureModal() {
     <AnimatePresence>
       {isOpen && (
         <>
-          {}
+          { }
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -41,7 +42,7 @@ export function DeleteGestureModal() {
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
           />
 
-          {}
+          { }
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -50,7 +51,7 @@ export function DeleteGestureModal() {
             className="fixed inset-0 flex items-center justify-center p-4 z-50"
           >
             <div className="glass-card rounded-xl border border-white/15 p-8 max-w-sm w-full">
-              {}
+              { }
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -60,7 +61,7 @@ export function DeleteGestureModal() {
                 <AlertCircle className="w-6 h-6 text-red-400" />
               </motion.div>
 
-              {}
+              { }
               <h2 className="text-xl font-bold text-foreground text-center mb-2">
                 Delete Gesture?
               </h2>
@@ -69,7 +70,7 @@ export function DeleteGestureModal() {
                 all its recorded samples will be permanently removed.
               </p>
 
-              {}
+              { }
               <div className="flex gap-3">
                 <motion.button
                   whileHover={{ scale: 1.05 }}

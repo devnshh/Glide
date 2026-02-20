@@ -147,7 +147,7 @@ export default function GesturesPage() {
           </motion.div>
         )}
 
-        {/* Stats Grid */}
+        {}
         {state.gestures.length > 0 && (
           <MagicBentoGrid>
             <motion.div

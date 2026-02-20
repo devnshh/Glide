@@ -60,9 +60,9 @@ class SystemState:
         self.gestures = self.load_gestures()
         self.last_known_landmarks = None
         self.latest_frame_raw = None
-        self.latest_landmarks = None  # Shared landmark data from camera loop for detection loop
+        self.latest_landmarks = None
         self.draw_lock = threading.Lock()
-        self.last_confirmed_action = None  # Tracks previous frame's action for rising-edge detection
+        self.last_confirmed_action = None
 
     def load_gestures(self):
         import json
@@ -96,7 +96,6 @@ detector = GestureDetector()
 classifier = GestureClassifier()
 mouse_controller = MouseController()
 
-# Lightweight MediaPipe instance for real-time landmark drawing in camera loop
 import mediapipe as mp
 _draw_hands = mp.solutions.hands.Hands(
     static_image_mode=False,
@@ -131,20 +130,17 @@ def camera_loop():
 
         frame = cv2.flip(frame, 1)
 
-        # Run MediaPipe once — used for both drawing AND detection
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         rgb.flags.writeable = False
         draw_results = _draw_hands.process(rgb)
         rgb.flags.writeable = True
 
-        # Draw landmarks on the frame for streaming
         if draw_results.multi_hand_landmarks:
             for hand_lm in draw_results.multi_hand_landmarks:
                 _draw_mp_draw.draw_landmarks(
                     frame, hand_lm, _draw_mp_hands.HAND_CONNECTIONS
                 )
 
-            # Share extracted landmarks with detection thread (normalized x,y,z list)
             first_hand = draw_results.multi_hand_landmarks[0]
             landmarks = []
             for lm in first_hand.landmark:
@@ -155,7 +151,6 @@ def camera_loop():
             with state.draw_lock:
                 state.latest_landmarks = None
 
-        # Stream the frame (with overlay drawn on it)
         try:
              encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 92]
              ret, buffer = cv2.imencode('.jpg', frame, encode_param)
@@ -164,7 +159,6 @@ def camera_loop():
         except Exception as e:
              print(f"Frame encoding error: {e}")
 
-        # Update FPS Status
         frame_count += 1
         curr_time = time.time()
         if curr_time - fps_start_time > 1.0:
@@ -187,11 +181,10 @@ def camera_loop():
                 }
             })
             
-        time.sleep(0.01) # Small sleep to prevent 100% CPU usage
+        time.sleep(0.01)
 
     cap.release()
     print("Camera stopped.")
-
 
 def detection_loop():
     """Independent loop for AI processing and Action Execution.
@@ -199,7 +192,6 @@ def detection_loop():
     print("Detection thread started.")
 
     while state.camera_running:
-        # 1. Get the latest landmarks from camera loop
         with state.draw_lock:
             hand_landmarks = list(state.latest_landmarks) if state.latest_landmarks else None
 
@@ -208,10 +200,8 @@ def detection_loop():
             continue
 
         try:
-            # 2. Action Logic (uses landmarks shared from camera_loop's single MediaPipe pass)
             if hand_landmarks:
                  
-                 # --- Training Mode ---
                  if state.training_mode and state.training_gesture_id:
                       current_time = time.time()
                       if current_time - state.last_capture_time >= 0.1:
@@ -234,7 +224,6 @@ def detection_loop():
                               save_training_data(state.training_gesture_id, state.training_data_buffer)
                               message_queue.put({"type": "training_complete", "data": {"gestureId": state.training_gesture_id}})
                  
-                 # --- Detection Mode ---
                  elif state.detection_active:
                       current_time = time.time()
                       prediction_label, confidence_score = classifier.predict(hand_landmarks)
@@ -262,17 +251,13 @@ def detection_loop():
                          "None": 0.0
                       }
 
-                      # Actions that should fire exactly once per gesture activation.
-                      # They use rising-edge detection instead of a repeating cooldown.
                       ONE_SHOT_ACTIONS = {
                           "screenshot",
                           "play_pause", "next_track", "prev_track", "mute",
                       }
 
-                      # --- Helper for executing actions ---
                       def execute_gesture_action_logic(act_name):
                           if act_name == "toggle_cursor":
-                             # Toggle with debounce
                              last_tog = state.last_action_time.get("toggle_cursor", 0)
                              if current_time - last_tog > 1.0:
                                   state.cursor_mode = not state.cursor_mode
@@ -292,8 +277,6 @@ def detection_loop():
                                   })
                              return
 
-                          # One-shot actions: fire immediately on the rising edge only.
-                          # If the same gesture is still held from last frame, do nothing.
                           if act_name in ONE_SHOT_ACTIONS:
                               if act_name != state.last_confirmed_action:
                                   print(f"Executing: {act_name} for {gesture_name}")
@@ -301,8 +284,6 @@ def detection_loop():
                                   state.last_action_time[act_name] = current_time
                               return
 
-                          # Continuous actions — cooldown is scaled by speed_factor so higher
-                          # speed means shorter cooldowns and faster gesture execution.
                           last_time = state.last_action_time.get(act_name, 0)
                           base_cooldown = ACTION_COOLDOWNS.get(act_name, 0.5)
                           cooldown = base_cooldown / max(state.speed_factor, 0.1)
@@ -312,43 +293,30 @@ def detection_loop():
                               execute_action(act_name)
                               state.last_action_time[act_name] = current_time
 
-                      # --- Logic Branching ---
-                      # 1. Toggle Cursor (Always active if high confidence)
                       if action_name == "toggle_cursor" and confidence_score > 0.8:
                            execute_gesture_action_logic(action_name)
 
-                      # 2. Cursor Mode Active
                       elif state.cursor_mode:
                           mouse_controller.update(hand_landmarks)
-                          # We do NOT execute other gestures in cursor mode
                           
-                      # 3. Standard Gesture Mode
                       else:
                           if gesture_name and confidence_score > state.confidence_threshold:
                               if action_name and action_name != "toggle_cursor":
                                   execute_gesture_action_logic(action_name)
                       
-                      # --- Rising-edge tracking ---
-                      # Update last_confirmed_action so one-shot actions know whether
-                      # the gesture is being held or has just appeared.
                       if gesture_name and confidence_score > state.confidence_threshold and action_name:
                           state.last_confirmed_action = action_name
                       else:
                           state.last_confirmed_action = None
 
-                      # --- Notifications ---
-                      # Only notify if confidence is ABOVE threshold
                       should_notify = False
                       if confidence_score > state.confidence_threshold:
-                          # Debounce notifications — scale with speed_factor
                           notification_debounce = 0.5 / max(state.speed_factor, 0.1)
                           if current_time - state.last_notification_time > notification_debounce:
                               if state.cursor_mode:
-                                  # Only notify toggle in cursor mode
                                   if action_name == "toggle_cursor" and confidence_score > 0.8:
                                       should_notify = True
                               elif action_name:
-                                  # Notify all actions in normal mode
                                   should_notify = True
 
                           if should_notify:
@@ -367,10 +335,7 @@ def detection_loop():
         except Exception as e:
             print(f"Detection Error: {e}")
             
-        # Small sleep to prevent eating 100% CPU in this thread
         time.sleep(0.01)
-
-
 
 def save_training_data(gesture_id, data):
 
@@ -458,7 +423,6 @@ async def startup_event():
 
     asyncio.create_task(message_consumer())
 
-
 @app.on_event("shutdown")
 async def shutdown_event():
     print("Shutting down... Stopping camera.")
@@ -475,8 +439,6 @@ class Gesture(BaseModel):
 class CaptureRequest(BaseModel):
     gestureId: str
     numSamples: int = 50
-
-
 
 @app.get("/")
 def read_root():
@@ -565,8 +527,6 @@ def train_model_route(background_tasks: BackgroundTasks):
 
     background_tasks.add_task(retrain_model_logic)
     return {"status": "training_started"}
-
-
 
 @app.post("/system/status")
 def update_system_status(status_update: dict):

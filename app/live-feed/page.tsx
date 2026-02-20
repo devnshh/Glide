@@ -52,7 +52,7 @@ export default function LiveFeedPage() {
             variants={itemVariants}
             className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[500px] items-stretch overflow-hidden"
           >
-            {/* Camera Feed Section */}
+            {}
             <div className="lg:col-span-2 h-full">
               <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
                 <div className="relative h-full w-full">
@@ -61,7 +61,7 @@ export default function LiveFeedPage() {
               </MagicBentoCard>
             </div>
 
-            {/* Detection Panel Section */}
+            {}
             <div className="h-full overflow-hidden">
               <MagicBentoCard className="h-full p-0 overflow-hidden" enableTilt={false} enableMagnetism={false} enableHoverAction={false}>
                 <DetectionPanel />

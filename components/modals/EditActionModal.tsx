@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
+import { API_URL } from '@/lib/config';
 import { Button } from '@/components/ui/button';
 
 const AVAILABLE_ACTIONS = [
@@ -56,7 +57,7 @@ export function EditActionModal() {
         const actionLabel = AVAILABLE_ACTIONS.find((a) => a.id === selectedAction)?.label || selectedAction;
 
         try {
-            await fetch(`http://localhost:8053/gestures/${gestureId}`, {
+            await fetch(`${API_URL}/gestures/${gestureId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, action: selectedAction })
@@ -116,7 +117,7 @@ export function EditActionModal() {
 
                     { }
                     <div className="px-6 pt-4 space-y-4">
-                        {/* Gesture Name Input */}
+                        {}
                         <div className="space-y-2">
                             <label className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
                                 Gesture Name
@@ -135,7 +136,7 @@ export function EditActionModal() {
                             </div>
                         </div>
 
-                        {/* Current Action Display */}
+                        {}
                         <div>
                             <p className="text-xs text-muted-foreground mb-2">Current action</p>
                             <div className="bg-white/5 border border-white/10 rounded-lg p-3 flex items-center gap-3">

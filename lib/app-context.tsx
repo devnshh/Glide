@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 import { AppState, SystemStatus } from './types';
 import { appReducer, AppAction, initialState } from './app-reducer';
+import { API_URL } from './config';
 
 interface AppContextType {
   state: AppState;
@@ -20,7 +21,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
       dispatch({ type: 'UPDATE_SYSTEM_STATUS', payload: status });
 
-      const response = await fetch('http://localhost:8053/system/status', {
+      const response = await fetch(`${API_URL}/system/status`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(status),
@@ -30,7 +31,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         console.error('Failed to update system status');
 
       }
-
 
       const data = await response.json();
       if (data.systemStatus) {

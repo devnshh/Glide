@@ -27,15 +27,15 @@ class DesktopController:
             for flags, updown in ((0xa00, 0xa), (0xb00, 0xb)):
                 data1 = (key_type << 16) | (updown << 8)
                 ev = NSEvent.otherEventWithType_location_modifierFlags_timestamp_windowNumber_context_subtype_data1_data2_(
-                    14,      # NSSystemDefined
-                    (0, 0),  # location
-                    flags,   # modifierFlags (0xa00=keydown, 0xb00=keyup)
-                    0,       # timestamp
-                    0,       # windowNumber
-                    None,    # context
-                    8,       # subtype
-                    data1,   # data1 encodes key type + up/down
-                    -1,      # data2
+                    14,
+                    (0, 0),
+                    flags,
+                    0,
+                    0,
+                    None,
+                    8,
+                    data1,
+                    -1,
                 )
                 Quartz.CGEventPost(Quartz.kCGHIDEventTap, ev.CGEvent())
         except Exception as e:
@@ -121,21 +121,21 @@ class DesktopController:
     def play_pause(self):
         print("DesktopController: Play/Pause")
         if self._system == "Darwin":
-            self._mac_media_key(16)  # NX_KEYTYPE_PLAY = 16
+            self._mac_media_key(16)
         else:
             pyautogui.press("playpause")
 
     def next_track(self):
         print("DesktopController: Next Track")
         if self._system == "Darwin":
-            self._mac_media_key(17)  # NX_KEYTYPE_NEXT = 17
+            self._mac_media_key(17)
         else:
             pyautogui.press("nexttrack")
 
     def prev_track(self):
         print("DesktopController: Prev Track")
         if self._system == "Darwin":
-            self._mac_media_key(18)  # NX_KEYTYPE_PREVIOUS = 18
+            self._mac_media_key(18)
         else:
             pyautogui.press("prevtrack")
 

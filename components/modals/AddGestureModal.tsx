@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, ArrowLeft, Check, Video, Circle, StopCircle } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
+import { API_URL, WS_URL } from '@/lib/config';
 import { GlassCard } from '../core/glass-card';
 import { Button } from '@/components/ui/button';
 import { ConfidenceRing } from '../core/confidence-ring';
@@ -45,7 +46,6 @@ export function AddGestureModal() {
   const [targetSamples, setTargetSamples] = useState(30);
   const [recordingComplete, setRecordingComplete] = useState(false);
 
-  // Create ID from name (slugified)
   const gestureId = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_') || 'unknown';
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export function AddGestureModal() {
       }
     };
 
-    const ws = new WebSocket('ws://localhost:8053/ws');
+    const ws = new WebSocket(WS_URL);
     ws.onmessage = handleMessage;
 
     return () => {
@@ -92,13 +92,13 @@ export function AddGestureModal() {
     setSampleCount(0);
 
     try {
-      await fetch('http://localhost:8053/train/capture', {
+      await fetch(`${API_URL}/train/capture`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ gestureId, numSamples: targetSamples })
       });
 
-      await fetch('http://localhost:8053/train/capture', {
+      await fetch(`${API_URL}/train/capture`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ gestureId, numSamples: targetSamples })
@@ -132,7 +132,7 @@ export function AddGestureModal() {
     };
 
     try {
-      await fetch('http://localhost:8053/gestures', {
+      await fetch(`${API_URL}/gestures`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newGesture)

@@ -101,18 +101,18 @@ export default function DashboardPage() {
             animate="visible"
             className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4"
           >
-            {/* Activity Feed */}
+            {}
             <motion.div variants={itemVariants} className="lg:col-span-2">
               <ActivityFeed />
             </motion.div>
 
-            {/* Quick Actions */}
+            {}
             <motion.div variants={itemVariants}>
               <QuickActions />
             </motion.div>
           </motion.div>
 
-          {/* System Status & Controls */}
+          {}
           <motion.div variants={itemVariants} className="space-y-3">
             <SystemHealthBar />
             <SpeedControl />
