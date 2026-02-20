@@ -28,13 +28,6 @@
     "sampleCount": 50
   },
   {
-    "id": "palm",
-    "name": "Palm",
-    "emoji": "\ud83d\udc4b",
-    "action": "volume_up",
-    "sampleCount": 30
-  },
-  {
     "id": "three",
     "name": "Three",
     "emoji": "\ud83d\udc4b",
@@ -54,5 +47,19 @@
     "emoji": "\u270c\ufe0f",
     "action": "switch_desktop_left",
     "sampleCount": 30
+  },
+  {
+    "id": "switch_right",
+    "name": "Switch Right",
+    "emoji": "\ud83d\udc4e",
+    "action": "switch_desktop_right",
+    "sampleCount": 30
+  },
+  {
+    "id": "palm",
+    "name": "Palm",
+    "emoji": "\ud83d\udc4b",
+    "action": "volume_up",
+    "sampleCount": 50
   }
 ]
