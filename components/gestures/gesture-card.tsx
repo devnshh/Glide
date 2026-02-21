@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Trash2, Edit2 } from 'lucide-react';
 import { MagicBentoCard } from '../ui/magic-bento';
 import { Gesture } from '@/lib/types';
+import { getGestureIcon } from '@/components/icons/gesture-icons';
 
 interface GestureCardProps {
   gesture: Gesture;
@@ -26,9 +27,11 @@ export function GestureCard({
       className="h-full"
     >
       <MagicBentoCard className="p-6 h-full flex flex-col gap-4 group">
-        {}
+        { }
         <div className="flex items-start justify-between">
-          <div className="text-4xl">{gesture.emoji}</div>
+          <div className="w-11 h-11 text-indigo-300">
+            {getGestureIcon(gesture.emoji)}
+          </div>
           <motion.div
             className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
             initial={false}
@@ -56,21 +59,21 @@ export function GestureCard({
           </motion.div>
         </div>
 
-        {}
+        { }
         <div className="flex-1">
           <h3 className="font-semibold text-foreground mb-1">
             {gesture.name}
           </h3>
           <p className="text-sm text-muted-foreground mb-3">{gesture.action}</p>
 
-          {}
+          { }
           <div className="flex items-center gap-2 mb-3">
             <div className="text-xs bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded-full font-mono">
               {gesture.sampleCount} samples
             </div>
           </div>
 
-          {}
+          { }
           {gesture.confidence !== undefined && (
             <div className="space-y-1">
               <div className="flex justify-between items-center text-xs">

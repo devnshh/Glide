@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { AlertTriangle, ArrowRight } from 'lucide-react';
 import { Gesture } from '@/lib/types';
 import { MagicBentoGrid, MagicBentoCard } from '@/components/ui/magic-bento';
+import { getGestureIcon } from '@/components/icons/gesture-icons';
 
 export default function GesturesPage() {
   const { state, dispatch } = useApp();
@@ -139,7 +140,9 @@ export default function GesturesPage() {
             variants={itemVariants}
             className="flex flex-col items-center justify-center py-16 gap-4"
           >
-            <div className="text-6xl">👆</div>
+            <div className="w-16 h-16 text-indigo-400/60">
+              {getGestureIcon('point_up')}
+            </div>
             <p className="text-foreground font-semibold">No gestures yet</p>
             <p className="text-muted-foreground text-sm">
               Create your first gesture to get started
