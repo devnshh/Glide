@@ -223,6 +223,17 @@ Refresh the page or toggle the camera off and on from the dashboard.
 ### App won't open — "damaged" or "unidentified developer"
 The app is ad-hoc signed (no Apple Developer certificate). Right-click → **Open** on first launch to bypass Gatekeeper.
 
+### Reset Permissions
+If permissions are stuck or stale after a rebuild, reset them via Terminal and re-grant:
+
+```bash
+tccutil reset Accessibility com.glide.app
+tccutil reset AppleEvents com.glide.app
+tccutil reset Camera com.glide.app
+```
+
+After running these, relaunch Glide and re-grant all permissions.
+
 ## Technical Stack
 
 ### Backend
