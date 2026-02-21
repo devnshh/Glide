@@ -112,23 +112,14 @@ This permission is needed for **brightness control** (which uses AppleScript to 
 
 ---
 
-### Option 2: Docker (Web Dashboard)
-Run the entire stack in isolated containers. **This avoids all Python version issues.**
-
-```bash
-docker-compose up --build
-```
-- **Dashboard**: http://localhost:3000
-- **Engine API**: http://localhost:8053
-
-### Option 3: Local Development
+### Option 2: Local Development
 
 #### Prerequisites
 - Python 3.9 – 3.11 (MediaPipe does not support Python 3.13)
 - Node.js 18+
 - Webcam
 
-> **Python 3.13 Users**: MediaPipe does not support Python 3.13 yet. Use Docker or install Python 3.11 (`brew install python@3.11`).
+> **Python 3.13 Users**: MediaPipe does not support Python 3.13 yet. Install Python 3.11 (`brew install python@3.11`).
 
 #### 1. Backend (Engine)
 
