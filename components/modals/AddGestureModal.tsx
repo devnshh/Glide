@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, ArrowLeft, Check, Video, Circle, StopCircle } from 'lucide-react';
 import { useApp } from '@/lib/app-context';
@@ -34,8 +34,9 @@ const GESTURE_EMOJIS = ['👋', '✌️', '👍', '👎', '🤞', '🤟', '🖐�
 const STEP_LABELS = ['Name', 'Action', 'Record', 'Confirm'];
 
 export function AddGestureModal() {
-  const { state, dispatch } = useApp();
+  const { state, dispatch, updateSystemStatus } = useApp();
   const isOpen = state.modalState.type === 'addGesture';
+  const wasDetectionActiveRef = useRef(false);
 
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
@@ -74,8 +75,23 @@ export function AddGestureModal() {
     };
   }, [isRecording, gestureId]);
 
+  // Pause detection when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      wasDetectionActiveRef.current = state.systemStatus.detectionActive;
+      if (state.systemStatus.detectionActive) {
+        updateSystemStatus({ detectionActive: false });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
   const handleClose = () => {
     dispatch({ type: 'CLOSE_MODAL' });
+    // Re-enable detection if it was active before
+    if (wasDetectionActiveRef.current) {
+      updateSystemStatus({ detectionActive: true });
+    }
     setTimeout(() => {
       setStep(1);
       setName('');
@@ -343,7 +359,7 @@ export function AddGestureModal() {
 
                   { }
                   <div className="relative aspect-video rounded-lg border border-white/10 overflow-hidden bg-black">
-                    <CameraFeed className="w-full h-full" />
+                    <CameraFeed key={`modal-cam-${step}`} className="w-full h-full" />
 
                     { }
                     {isRecording && (

@@ -14,6 +14,7 @@ export type AppAction =
   | { type: 'CLOSE_MODAL' }
   | { type: 'SET_NEEDS_RETRAIN'; payload: boolean }
   | { type: 'UPDATE_GESTURE_ACTION'; payload: { id: string; action: string } }
+  | { type: 'INCREMENT_ACTIONS' }
   | { type: 'RESET_STATE' };
 
 export const initialState: AppState = {
@@ -37,6 +38,9 @@ export const initialState: AppState = {
   },
   selectedGestureId: undefined,
   needsRetrain: false,
+  totalDetections: 0,
+  totalActionsExecuted: 0,
+  sessionStartTime: Date.now(),
 };
 
 export function appReducer(state: AppState, action: AppAction): AppState {
@@ -79,9 +83,16 @@ export function appReducer(state: AppState, action: AppAction): AppState {
       };
 
     case 'ADD_DETECTION': {
-      const newDetections = [action.payload, ...state.detections].slice(0, 20);
-      return { ...state, detections: newDetections };
+      const newDetections = [action.payload, ...state.detections].slice(0, 50);
+      return {
+        ...state,
+        detections: newDetections,
+        totalDetections: state.totalDetections + 1,
+      };
     }
+
+    case 'INCREMENT_ACTIONS':
+      return { ...state, totalActionsExecuted: state.totalActionsExecuted + 1 };
 
     case 'CLEAR_DETECTIONS':
       return { ...state, detections: [] };

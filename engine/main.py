@@ -45,6 +45,8 @@ class SystemState:
 
         self.total_detections = 0
         self.actions_executed = 0
+        self.confidence_sum = 0.0
+        self.confidence_count = 0
 
         self.training_mode = False
         self.training_gesture_id = None
@@ -175,6 +177,7 @@ def camera_loop():
                     "model_status": "ready" if classifier.model is not None else "loading",
                     "total_detections": state.total_detections,
                     "actions_executed": state.actions_executed,
+                    "avg_confidence": round(state.confidence_sum / state.confidence_count * 100, 1) if state.confidence_count > 0 else 0,
                     "confidence_threshold": state.confidence_threshold,
                     "speed_factor": state.speed_factor,
                     "cursor_mode": state.cursor_mode
@@ -281,6 +284,7 @@ def detection_loop():
                               if act_name != state.last_confirmed_action:
                                   print(f"Executing: {act_name} for {gesture_name}")
                                   execute_action(act_name)
+                                  state.actions_executed += 1
                                   state.last_action_time[act_name] = current_time
                               return
 
@@ -291,6 +295,7 @@ def detection_loop():
                           if current_time - last_time > cooldown:
                               print(f"Executing: {act_name} for {gesture_name}")
                               execute_action(act_name)
+                              state.actions_executed += 1
                               state.last_action_time[act_name] = current_time
 
                       if action_name == "toggle_cursor" and confidence_score > 0.8:
@@ -321,6 +326,9 @@ def detection_loop():
 
                           if should_notify:
                               state.last_notification_time = current_time
+                              state.total_detections += 1
+                              state.confidence_sum += float(confidence_score)
+                              state.confidence_count += 1
                               message_queue.put({
                                   "type": "detection",
                                   "data": {

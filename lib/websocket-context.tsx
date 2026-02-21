@@ -62,6 +62,9 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
                 fps: statusData.fps,
                 wsConnected: true,
                 cursorMode: statusData.cursorMode ?? false,
+                totalDetections: (statusData as any).totalDetections ?? 0,
+                actionsExecuted: (statusData as any).actionsExecuted ?? 0,
+                avgConfidence: (statusData as any).avgConfidence ?? 0,
               },
             });
           } else if (message.type === 'detection') {
@@ -77,6 +80,9 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
                 timestamp: new Date(),
               },
             });
+            if (detection.action) {
+              dispatch({ type: 'INCREMENT_ACTIONS' });
+            }
           } else if (message.type === 'training') {
 
             console.log("Training update:", message.data);

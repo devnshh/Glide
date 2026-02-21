@@ -32,6 +32,9 @@ export interface SystemStatus {
   confidenceThreshold?: number;
   speedFactor?: number;
   cursorMode?: boolean;
+  totalDetections?: number;
+  actionsExecuted?: number;
+  avgConfidence?: number;
 }
 
 export interface TrainingState {
@@ -63,6 +66,9 @@ export interface AppState {
   modalState: ModalState;
   selectedGestureId?: string;
   needsRetrain: boolean;
+  totalDetections: number;
+  totalActionsExecuted: number;
+  sessionStartTime: number;
 }
 
 export interface WebSocketMessage {

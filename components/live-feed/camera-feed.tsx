@@ -16,72 +16,71 @@ export function CameraFeed({ className }: CameraFeedProps) {
   const [loading, setLoading] = useState(true);
   const [feedUrl, setFeedUrl] = useState<string | null>(null);
   const isCameraOn = state.systemStatus.camera === 'on';
-  const mountIdRef = useRef(0);
+  const mountId = useRef(Date.now());
 
   useEffect(() => {
-    if (isCameraOn) {
+    // Generate a new mount ID each time this effect runs
+    const id = Date.now();
+    mountId.current = id;
 
-      mountIdRef.current += 1;
-      const currentMount = mountIdRef.current;
-
-      setLoading(true);
-      setError(false);
-      setFeedUrl(null);
-
-      const reconnectTimer = setTimeout(() => {
-
-        if (mountIdRef.current === currentMount) {
-          setFeedUrl(`${API_URL}/video_feed?t=${Date.now()}`);
-        }
-      }, 500);
-
-      const loadTimer = setTimeout(() => {
-        if (mountIdRef.current === currentMount) {
-          setLoading(false);
-        }
-      }, 3500);
-
-      return () => {
-        clearTimeout(reconnectTimer);
-        clearTimeout(loadTimer);
-
-        setFeedUrl(null);
-      };
-    } else {
+    if (!isCameraOn) {
       setFeedUrl(null);
       setLoading(false);
+      return;
     }
+
+    setLoading(true);
+    setError(false);
+    setFeedUrl(null);
+
+    const connectTimer = setTimeout(() => {
+      if (mountId.current === id) {
+        setFeedUrl(`${API_URL}/video_feed?t=${id}`);
+      }
+    }, 200);
+
+    const loadingTimer = setTimeout(() => {
+      if (mountId.current === id) {
+        setLoading(false);
+      }
+    }, 3000);
+
+    return () => {
+      clearTimeout(connectTimer);
+      clearTimeout(loadingTimer);
+      setFeedUrl(null);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCameraOn]);
 
+  // Also reconnect on every fresh mount (handles page navigation)
   useEffect(() => {
-    if (isCameraOn) {
-      mountIdRef.current += 1;
-      const currentMount = mountIdRef.current;
+    if (!isCameraOn) return;
 
-      setLoading(true);
-      setError(false);
-      setFeedUrl(null);
+    const id = Date.now();
+    mountId.current = id;
 
-      const timer = setTimeout(() => {
-        if (mountIdRef.current === currentMount) {
-          setFeedUrl(`${API_URL}/video_feed?t=${Date.now()}`);
-        }
-      }, 500);
+    setLoading(true);
+    setError(false);
 
-      const loadTimer = setTimeout(() => {
-        if (mountIdRef.current === currentMount) {
-          setLoading(false);
-        }
-      }, 3500);
+    const connectTimer = setTimeout(() => {
+      if (mountId.current === id) {
+        setFeedUrl(`${API_URL}/video_feed?t=${id}`);
+      }
+    }, 200);
 
-      return () => {
-        clearTimeout(timer);
-        clearTimeout(loadTimer);
-        setFeedUrl(null);
-      };
-    }
+    const loadingTimer = setTimeout(() => {
+      if (mountId.current === id) {
+        setLoading(false);
+      }
+    }, 3000);
 
-  }, []); 
+    return () => {
+      clearTimeout(connectTimer);
+      clearTimeout(loadingTimer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleImageLoad = () => {
     setLoading(false);
@@ -155,7 +154,6 @@ export function CameraFeed({ className }: CameraFeedProps) {
         )}
       </AnimatePresence>
 
-      { }
       {isCameraOn && !error && !loading && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}

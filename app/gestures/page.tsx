@@ -147,7 +147,7 @@ export default function GesturesPage() {
           </motion.div>
         )}
 
-        {}
+        { }
         {state.gestures.length > 0 && (
           <MagicBentoGrid>
             <motion.div
@@ -173,15 +173,9 @@ export default function GesturesPage() {
                   Average Confidence
                 </p>
                 <p className="text-2xl font-bold text-foreground">
-                  {Math.round(
-                    (state.gestures.reduce(
-                      (sum, g) => sum + (g.confidence || 0),
-                      0
-                    ) /
-                      state.gestures.length) *
-                    100
-                  )}
-                  %
+                  {state.systemStatus.avgConfidence
+                    ? `${state.systemStatus.avgConfidence.toFixed(1)}%`
+                    : '—'}
                 </p>
               </MagicBentoCard>
             </motion.div>

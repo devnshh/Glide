@@ -42,13 +42,6 @@
     "sampleCount": 30
   },
   {
-    "id": "switch_left",
-    "name": "Switch Left",
-    "emoji": "\u270c\ufe0f",
-    "action": "switch_desktop_left",
-    "sampleCount": 30
-  },
-  {
     "id": "switch_right",
     "name": "Switch Right",
     "emoji": "\ud83d\udc4e",
@@ -61,5 +54,12 @@
     "emoji": "\ud83d\udc4b",
     "action": "volume_up",
     "sampleCount": 50
+  },
+  {
+    "id": "switch_left",
+    "name": "Switch Left",
+    "emoji": "\ud83e\udd18",
+    "action": "switch_desktop_left",
+    "sampleCount": 30
   }
 ]

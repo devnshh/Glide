@@ -14,6 +14,8 @@ import { MagicBentoGrid } from '@/components/ui/magic-bento';
 export default function DashboardPage() {
   const { state } = useApp();
 
+  const avgConfidence = state.systemStatus.avgConfidence ?? 0;
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -62,32 +64,28 @@ export default function DashboardPage() {
                 icon={<Wand2 className="w-5 h-5" />}
                 label="Total Gestures"
                 value={state.gestures.length}
-                trend={{ direction: 'up', value: 12 }}
               />
             </motion.div>
             <motion.div variants={itemVariants}>
               <StatCard
                 icon={<Activity className="w-5 h-5" />}
-                label="Detections (24h)"
-                value="324"
-                trend={{ direction: 'up', value: 8 }}
+                label="Detections"
+                value={state.systemStatus.totalDetections ?? 0}
               />
             </motion.div>
             <motion.div variants={itemVariants}>
               <StatCard
                 icon={<TrendingUp className="w-5 h-5" />}
-                label="Accuracy"
-                value="94.2"
-                suffix="%"
-                trend={{ direction: 'up', value: 2 }}
+                label="Avg Confidence"
+                value={avgConfidence > 0 ? avgConfidence.toFixed(1) : '—'}
+                suffix={avgConfidence > 0 ? '%' : ''}
               />
             </motion.div>
             <motion.div variants={itemVariants}>
               <StatCard
                 icon={<Zap className="w-5 h-5" />}
-                label="Model Status"
-                value={state.systemStatus.model === 'ready' ? 'Ready' : 'Loading'}
-                trend={undefined}
+                label="Actions Executed"
+                value={state.systemStatus.actionsExecuted ?? 0}
               />
             </motion.div>
           </motion.div>
@@ -101,18 +99,18 @@ export default function DashboardPage() {
             animate="visible"
             className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4"
           >
-            {}
+            { }
             <motion.div variants={itemVariants} className="lg:col-span-2">
               <ActivityFeed />
             </motion.div>
 
-            {}
+            { }
             <motion.div variants={itemVariants}>
               <QuickActions />
             </motion.div>
           </motion.div>
 
-          {}
+          { }
           <motion.div variants={itemVariants} className="space-y-3">
             <SystemHealthBar />
             <SpeedControl />
