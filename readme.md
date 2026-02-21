@@ -66,7 +66,7 @@ Download the latest `.dmg` from the [Releases](../../releases) page.
 
 ---
 
-### ⚠️ macOS Permissions
+### macOS Permissions
 
 Glide requires three macOS permissions to function fully. **Without these, most gesture actions will silently fail.**
 
