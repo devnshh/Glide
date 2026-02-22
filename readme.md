@@ -100,13 +100,13 @@ This permission is needed for **brightness control** (which uses AppleScript to 
 |--------|-------------------|----------------|
 | Volume Up/Down | None | — |
 | Mute | None | — |
-| Brightness Up/Down | Automation (System Events) | ✅ Yes |
-| Play/Pause, Next/Prev Track | Accessibility | ❌ Manual |
-| Cursor Control | Accessibility | ❌ Manual |
-| Screenshot | Accessibility | ❌ Manual |
-| Switch Tab / Desktop | Accessibility | ❌ Manual |
-| Scroll Up/Down | Accessibility | ❌ Manual |
-| Camera Feed | Camera | ✅ Yes |
+| Brightness Up/Down | Automation (System Events) | Yes |
+| Play/Pause, Next/Prev Track | Accessibility | Manual |
+| Cursor Control | Accessibility | Manual |
+| Screenshot | Accessibility | Manual |
+| Switch Tab / Desktop | Accessibility | Manual |
+| Scroll Up/Down | Accessibility | Manual |
+| Camera Feed | Camera | Yes |
 
 > **Important**: If you rebuild the app from source, macOS invalidates the previous Accessibility permission (because the ad-hoc code signature changes). You will need to **remove the old Glide entry** and **re-add the new one** in Accessibility settings after each rebuild.
 
